@@ -12,18 +12,24 @@ class Controller_MTNL extends Controller_Template
 	{
 		$data = array();
 		$this->template->title = 'Home Page';
-		$this->template->content = view::forge('eastwest/index', $data);
+		$this->template->content = view::forge('MTNL/index', $data);
 
 
 		$this->template->currLink = "index.php";
-		$this->template->currDirection = $direction;
-		$this->template->oppDirection = $oppDirection;
-		$this->template->oppDirection_link = $oppDirection_link;
-
-		$response = Response::forge($this->template, 200);
-		$response->set_header('Content-Type', 'text/html');
+		
 
 		return $response;
+	}
+
+	public function action_about(){
+		$this->template->title = 'About';
+		$this->template->content = view::forge('MTNL/one');
+		$this->template->currLink = "one.php";
+	}
+	public function action_CC(){
+		$this->template->title = 'Color Coordinate Sheet';
+		$this->template->content = view::forge('MTNL/two');
+		$this->template->currLink = "two.php";
 	}
 
 }

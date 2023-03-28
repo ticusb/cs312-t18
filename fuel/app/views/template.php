@@ -14,8 +14,8 @@
         </div>
         <div class="nav-items">
             <?php echo Html::anchor("index.php/eastwest/index.php?direction=".$currDirection, "Home"); ?>
-            <?php echo Html::anchor("index.php/eastwest/one.php?direction=".$currDirection, "One"); ?>
-            <?php echo Html::anchor("index.php/eastwest/two.php?direction=".$currDirection, "Two"); ?>
+            <?php echo Html::anchor("index.php/eastwest/one.php?direction=".$currDirection, "About"); ?>
+            <?php echo Html::anchor("index.php/eastwest/two.php?direction=".$currDirection, "Color Coordinates"); ?>
         </div>
     </nav>
     <?php echo $content; ?>
