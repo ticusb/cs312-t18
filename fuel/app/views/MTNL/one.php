@@ -1,7 +1,13 @@
 <main>
     <section class="home-section">
         <div>
-            <h1>ONE PHP</h1>
+            <h1>About</h1>
+        </div>
+        <div>
+            <img height = 100 width = 100 src = "https://brand.colostate.edu/wp-content/uploads/sites/47/2019/01/Ram-Logo-Pantone-357-617-768x768.jpg">
+            <p>
+            My name is Marlowe Lankford and I am a Sophomore. 
+            </p>
         </div>
     </section>
 </main>

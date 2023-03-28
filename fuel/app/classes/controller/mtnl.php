@@ -18,13 +18,14 @@ class Controller_MTNL extends Controller_Template
 		$this->template->currLink = "index.php";
 		
 
-		return $response;
+		
 	}
 
 	public function action_about(){
 		$this->template->title = 'About';
 		$this->template->content = view::forge('MTNL/one');
 		$this->template->currLink = "one.php";
+		
 	}
 	public function action_CC(){
 		$this->template->title = 'Color Coordinate Sheet';
