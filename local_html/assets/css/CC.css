@@ -26,6 +26,14 @@ nav{
 
     color:white;
 }
+.nav-items{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    text-decoration: none;
+
+    color:white;
+}
 
 nav :hover{
     color:aqua;
