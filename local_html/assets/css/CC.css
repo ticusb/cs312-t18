@@ -18,11 +18,13 @@ nav{
     background-color: black;
 }
 
-.nav-items{
+.nav-items a{
     display: flex;
     flex-direction: row;
     gap: 10px;
     text-decoration: none;
+
+    color:white;
 }
 
 nav :hover{
