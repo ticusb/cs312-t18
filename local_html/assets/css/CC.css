@@ -1,0 +1,51 @@
+html{
+    background-color: lightgoldenrodyellow;
+    width:90%;
+}
+#leftColumnFirstTable{
+    width:20%;
+    align-items: left;
+}
+#rightColumnFirsttable{
+    width: 80%;
+    align-items: right;
+}
+
+
+nav{
+    text-decoration: none;
+    text-align: center;
+    color: white;
+    background-color: black;
+    margin-left: auto;
+    margin-right:auto;
+
+}
+
+.nav-items a{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    text-decoration: none;
+
+    color:white;
+}
+.nav-items{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    text-decoration: none;
+    justify-content: center;
+
+    color:white;
+}
+
+nav :hover{
+    color:aqua;
+}
+
+.button_one{
+    align-content: center;
+    background-color: red;
+    color: white; 
+}
