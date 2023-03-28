@@ -1,0 +1,12 @@
+html{
+    background-color: lightgoldenrodyellow;
+    width:90%;
+}
+#leftColumnFirstTable{
+    width:20%;
+    align-items: left;
+}
+#rightColumnFirsttable{
+    width: 80%;
+    align-items: right;
+}
