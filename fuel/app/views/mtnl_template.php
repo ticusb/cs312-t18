@@ -10,12 +10,9 @@
 <body>
     <nav class="navbar">
         <div class="nav-items">
-            <?php echo Html::anchor("index.php/eastwest/".$currLink."?direction=".$oppDirection, "Go ".$oppDirection_link); ?>
-        </div>
-        <div class="nav-items">
-            <?php echo Html::anchor("index.php/eastwest/index.php?direction=".$currDirection, "Home"); ?>
-            <?php echo Html::anchor("index.php/eastwest/one.php?direction=".$currDirection, "About"); ?>
-            <?php echo Html::anchor("index.php/eastwest/two.php?direction=".$currDirection, "Color Coordinates"); ?>
+            <?php echo Html::anchor("index.php/mtnl/index", "Home"); ?>
+            <?php echo Html::anchor("index.php/mtnl/about", "About"); ?>
+            <?php echo Html::anchor("index.php/mtnl/cc", "Color Coordinates"); ?>
         </div>
     </nav>
     <?php echo $content; ?>
