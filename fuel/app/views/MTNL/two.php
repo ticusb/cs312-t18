@@ -25,8 +25,17 @@
                 }
                 body.appendChild(tbl);
                 
+                function set_style(id, attr, value) {
+                    var item = document.getElementById(id);
+                    item.style[attr] = value;
+                }
+                function get_style (id, attr) {
+                    return document.getElementById(id).style[attr];
+                }
+
                 function generate_view() {
                     window.print();
+
                 }
             </script>
 
