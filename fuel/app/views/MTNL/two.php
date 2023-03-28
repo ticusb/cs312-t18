@@ -25,6 +25,13 @@
                 }
                 body.appendChild(tbl);
                 
+                function generate_view() {
+                    window.print();
+                }
             </script>
+
+            <button class="button_one" onclick="generate_view();">
+
+            </button>
     </section>
 </main>
