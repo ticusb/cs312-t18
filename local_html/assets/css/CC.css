@@ -11,11 +11,15 @@ html{
     align-items: right;
 }
 
+
 nav{
     text-decoration: none;
     text-align: center;
     color: white;
     background-color: black;
+    margin-left: auto;
+    margin-right:auto;
+
 }
 
 .nav-items a{
@@ -31,6 +35,7 @@ nav{
     flex-direction: row;
     gap: 10px;
     text-decoration: none;
+    justify-content: center;
 
     color:white;
 }
