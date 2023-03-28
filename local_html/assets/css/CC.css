@@ -28,3 +28,9 @@ nav{
 nav :hover{
     color:aqua;
 }
+
+.button_one{
+    align-content: center;
+    background-color: red;
+    color: white; 
+}

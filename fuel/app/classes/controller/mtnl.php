@@ -3,6 +3,7 @@
 class Controller_MTNL extends Controller_Template
 {
 	public $css = "mtnl.css";
+	
 
 	public function before()
 	{
