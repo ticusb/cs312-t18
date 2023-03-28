@@ -14,7 +14,7 @@ class Controller_MTNL extends Controller_Template
 	{
 
 		echo Asset::css("mtnl.css");
-		
+
 		$data = array();
 		$this->template->title = 'Home Page';
 		$this->template->content = view::forge('MTNL/index', $data);
