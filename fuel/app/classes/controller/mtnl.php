@@ -17,7 +17,10 @@ class Controller_MTNL extends Controller_Template
 
 		$this->template->currLink = "index.php";
 		
+		$response = Response::forge($this->template, 200);
+		$response->set_header('Content-Type', 'text/html');
 
+		
 		return $response;
 	}
 
@@ -25,11 +28,19 @@ class Controller_MTNL extends Controller_Template
 		$this->template->title = 'About';
 		$this->template->content = view::forge('MTNL/one');
 		$this->template->currLink = "one.php";
+		$response = Response::forge($this->template, 200);
+		$response->set_header('Content-Type', 'text/html');
+
+		return $response;
 	}
 	public function action_CC(){
 		$this->template->title = 'Color Coordinate Sheet';
 		$this->template->content = view::forge('MTNL/two');
 		$this->template->currLink = "two.php";
+		$response = Response::forge($this->template, 200);
+		$response->set_header('Content-Type', 'text/html');
+
+		return $response;
 	}
 
 }
