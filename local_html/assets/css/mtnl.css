@@ -24,6 +24,15 @@ nav{
 nav :hover{
     color:aqua;
 }
+img{
+    width:329;
+    height: 162;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+
+}
 
 
 
