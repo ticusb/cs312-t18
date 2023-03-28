@@ -38,15 +38,21 @@ class Controller_MTNL extends Controller_Template
 	}
 
 	public function action_CC(){
+		$data = array();
+		$rows_cols = isset($_GET["rows/columns"]) ? $_GET["rows/columns"] : '';
+		$color = isset($_GET["color"]) ? $_GET["color"] : '';
+
+		$this->template->rows_cols = $rows_cols;
+		$this->template->color = $color;
+		
 		$this->template->title = 'Color Coordinate Sheet';
-		$this->template->content = view::forge('MTNL/two');
+		$this->template->content = view::forge('MTNL/two', $data);
 		$this->template->currLink = "two.php";
-		$this->template->css = "CC.css";
+		$this->template->css = "mtnl.css";
 		$response = Response::forge($this->template, 200);
 		$response->set_header('Content-Type', 'text/html');
 		
 
 		return $response;
 	}
-
 }
