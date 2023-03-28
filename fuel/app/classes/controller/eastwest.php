@@ -1,6 +1,6 @@
 <?php
 
-class Controller_EastWest extends Controller_Template
+class Controller_MTNL extends Controller_Template
 {
 
 	public function before()
