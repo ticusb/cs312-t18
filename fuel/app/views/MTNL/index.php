@@ -1,7 +1,7 @@
 <main>
     <section class="home-section">
-        <h1>Ticus is Home</h1>
-        <?php echo Asset::img('HomePic.jpeg'); ?>
+        <h1>MTNL</h1>
+        <?php echo Asset::img('MTNLlogo.png'); ?>
     </section>
     <section class="body-section">
         <p>Hey! My name is Ticus, welcome to my page! Extremely excited to have you here, truly. In the following paragraphs I will discuss east and west related things.</p>

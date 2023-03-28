@@ -10,6 +10,19 @@ h1{
 nav{
     text-decoration: none;
     text-align: center;
+    color: white;
+    background-color: black;
+}
+
+.nav-items{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    text-decoration: none;
+}
+
+nav :hover{
+    color:aqua;
 }
 
 
