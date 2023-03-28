@@ -41,7 +41,7 @@ class Controller_MTNL extends Controller_Template
 		$this->template->title = 'Color Coordinate Sheet';
 		$this->template->content = view::forge('MTNL/two');
 		$this->template->currLink = "two.php";
-		$this->template->css = "mtnl.css";
+		$this->template->css = "CC.css";
 		$response = Response::forge($this->template, 200);
 		$response->set_header('Content-Type', 'text/html');
 		
