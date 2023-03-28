@@ -1,0 +1,13 @@
+html{
+    background-color: lightgray;
+    width: 90%;
+}
+h1{
+    text-align: center;
+    text-emphasis-color: black;
+}
+
+nav{
+    text-decoration: none;
+    text-align: center;
+}
