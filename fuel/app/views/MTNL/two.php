@@ -55,7 +55,7 @@
 
                 function generate_view() {
                     document.getElementById("all").style.filter = "grayscale(100%)";
-                    document.getElementById("interactable").disabled = true;
+                    document.getElementById("all").disabled = true;
                 }
             </script>
 
