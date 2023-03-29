@@ -1,6 +1,6 @@
 
 <main id = "all">
-    <section class="cc">
+    <section class="cc" id = "interactable">
         <h1>Color Coordinate Generation</h1>
             <script type="text/javascript">
                 const body = document.getElementsByClassName("cc")
@@ -35,6 +35,7 @@
 
                 function generate_view() {
                     document.getElementById("all").style.filter = "grayscale(100%)";
+                    document.getElementById("interactable").disabled = true;
                 }
             </script>
 
