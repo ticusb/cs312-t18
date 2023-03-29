@@ -1,5 +1,5 @@
 
-<main>
+<main id = "all">
     <section class="cc">
         <h1>Color Coordinate Generation</h1>
             <script type="text/javascript">
@@ -34,7 +34,7 @@
                 }
 
                 function generate_view() {
-                    window.print();
+                    document.getElementById("all").style.filter = "grayscale(100%)";
                 }
             </script>
 
