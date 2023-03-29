@@ -9,7 +9,7 @@
     <?php echo Asset::css($css) ?>
 </head>
 <body>
-<?php echo Asset::img('MTNLlogo.png'); ?>
+<img src = "MTNLlogo.png">
     <nav class="navbar">
         <div class="nav-items">
             <?php echo Html::anchor("index.php/mtnl/index", "Home"); ?>

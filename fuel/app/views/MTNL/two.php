@@ -39,7 +39,7 @@
             </script>
 
             <button class="button_one" onclick="generate_view();">
-
+                Print
             </button>
     </section>
 </main>
