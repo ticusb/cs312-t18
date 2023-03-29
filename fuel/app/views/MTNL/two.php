@@ -52,10 +52,12 @@
                 function get_style (id, attr) {
                     return document.getElementById(id).style[attr];
                 }
-
+                let f = false;
                 function generate_view() {
                     document.getElementById("all").style.filter = "grayscale(100%)";
                     document.getElementById("all").disabled = true;
+                    document.getElementsByTagName("*").disabled = true;
+                    
                 }
             </script>
 
