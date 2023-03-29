@@ -27,9 +27,9 @@
                 
                 tbl2 = document.createElement('table');
                 tbl2.style.border = '1px solid black';
-                for (var i = 0; i < rc; i++) {
+                for (var i = 0; i < rc + 1; i++) {
                     const tr = tbl2.insertRow();
-                    for (var j = 0; j < rc; j++) {
+                    for (var j = 0; j < rc + 1; j++) {
                         if (i == 0 && j == 0) {
                             const td = tr.appendChild(document.createTextNode(""));
                         } else if (i == 0) {
