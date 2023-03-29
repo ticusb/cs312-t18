@@ -34,7 +34,7 @@
                             const td = tr.appendChild(document.createTextNode(""));
                         } else if (i == 0) {
                             const td = tr.appendChild(document.createTextNode(String.fromCharCode('A'.charCodeAt() + (i - 1))));
-                        } else if (i != 0 && j == 0) {
+                        } else if (j == 0) {
                             const td = tr.appendChild(document.createTextNode("" + i));
                         } else {
                             const td = tr.appendChild(document.createTextNode(""));
