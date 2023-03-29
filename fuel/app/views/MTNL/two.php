@@ -35,7 +35,6 @@
 
                 function generate_view() {
                     window.print();
-
                 }
             </script>
 
