@@ -1,6 +1,9 @@
 <main id = "all">
     <section class="cc" id = "interactable">
         <h1>Color Coordinate Generation</h1>
+        <div>
+        <img src = "MTNLlogo.png">
+        </div>
         <table id="firstTbl"></table>
             <script type="text/javascript">
                 const body = document.getElementsByClassName("cc");
