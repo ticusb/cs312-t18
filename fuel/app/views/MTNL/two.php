@@ -14,11 +14,19 @@
                 console.log(rows);
                 for(let i = 0; i < rows; i++) {
                     var newRow = tbl.insertRow();
+                    let x = 0;
                     for(let j = 0; j < rows; j++){
+                        if(x == 0) {
+                            var cell = 
+                        }
                         var cell = newRow.insertCell();
                     }
                 }
                 
+                for(i = 0; i < tr.length(); i++) {
+                    console.log(tr[i].children[0]);
+                }
+
                 tbl2 = document.createElement('table');
                 tbl2.style.border = '1px solid black';
                 for (var i = 0; i < rc + 1; i++) {
