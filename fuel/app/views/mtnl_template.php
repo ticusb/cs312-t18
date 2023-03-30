@@ -20,3 +20,18 @@
     <?php echo $content; ?>
 </body>
 </html>
+<div class="dropdown">
+    <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+    <div id="myDropdown" class="dropdown-content">
+        <a href="#">Red</a>
+        <a href="#">Orange</a>
+        <a href="#">Yellow</a>
+        <a href="#">green</a>
+        <a href="#">blue</a>
+        <a href="#">purple</a>
+        <a href="#">grey</a>
+        <a href="#">brown</a>
+        <a href="#">black</a>
+        <a href="#">teal</a>
+    </div>
+</div>
