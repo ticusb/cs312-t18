@@ -43,13 +43,13 @@ class Controller_MTNL extends Controller_Template
 		$color = isset($_GET["color"]) ? $_GET["color"] : null;
 
 		if(!isset($rows_cols) & !isset($color)) {
-			$this->template->content = "Rows/cols and color not set";
+			$this->template->content = "Parameter \"rows/cols\" and \"color\"  not set\n EX: cc?color=9&rows/cols=10";
 		}
 		else if(!isset($rows_cols) & isset($color)) {
-			$this->template->content = "Rows/cols not set";
+			$this->template->content = "Parameter \"rows/cols\" not set\r\n EX: cc?color=9&rows/cols=10";
 		}
 		else if(!isset($color) & isset($rows_cols)) {
-			$this->template->content = "colors not set";
+			$this->template->content = "Parameter \"color\" not set\r\n EX: cc?color=9&rows/cols=10";
 		}
 		else{
 			// both set
@@ -64,13 +64,13 @@ class Controller_MTNL extends Controller_Template
 			}
 
 			if(!$valid_color) {
-				$this->template->content = "Invalid input for \"color\"";
+				$this->template->content = "Invalid input for \"color\" \r\n Should be a value between 1-10 \r\n EX: cc?color=9&rows/cols=10";
 			}
 			else if(!$valid_rows_cols){
-				$this->template->content = "Invalid input for \"rows/cols\"";
+				$this->template->content = "Invalid input for \"rows/cols\"\r\n Should be a value between 1-26 \r\n EX: cc?color=9&rows/cols=10";
 			}
 			else if(!$valid_color & !$valid_rows_cols) {
-				$this->template->content = "Invalid input for \"color\" and Invalid input for \"rows/cols\"";
+				$this->template->content = "Invalid input for \"color\" and Invalid input for \"rows/cols\"\r\n \"color\" should be a value between 1-10 \r\n\"color\" should be a value between 1-26 \r\n EX: cc?color=9&rows/cols=10";
 
 			}
 			else if($valid_color & $valid_rows_cols) {
