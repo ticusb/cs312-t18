@@ -2,7 +2,6 @@
 
 class Controller_MTNL extends Controller_Template
 {
-
 	public function before()
 	{
 		parent::before();
@@ -11,9 +10,6 @@ class Controller_MTNL extends Controller_Template
 
 	public function action_index()
 	{
-
-		echo Asset::css("mtnl.css");
-
 		$data = array();
 		$this->template->title = 'Home Page';
 		$this->template->content = view::forge('MTNL/index', $data);
@@ -24,6 +20,9 @@ class Controller_MTNL extends Controller_Template
 		
 		$response = Response::forge($this->template, 200);
 		$response->set_header('Content-Type', 'text/html');
+		
+
+		
 	}
 
 	public function action_about(){
@@ -32,23 +31,62 @@ class Controller_MTNL extends Controller_Template
 		$this->template->content = view::forge('MTNL/one', $data);
 		$this->template->currLink = "one.php";
 		$this->template->css = "mtnl.css";
+		
 	}
 
 	public function action_CC(){
-		$data = array();
-		$rows_cols = isset($_GET["rows/columns"]) ? $_GET["rows/columns"] : '';
-		$color = isset($_GET["color"]) ? $_GET["color"] : '';
 
-		$this->template->rows_cols = $rows_cols;
-		$this->template->color = $color;
+		echo Asset::css("CC.css");
+		$data = array();
+
+		$rows_cols = isset($_GET["rows/cols"]) ? $_GET["rows/cols"] : null;
+		$color = isset($_GET["color"]) ? $_GET["color"] : null;
+
+		if(!isset($rows_cols) & !isset($color)) {
+			$this->template->content = "Rows/cols and color not set";
+		}
+		else if(!isset($rows_cols) & isset($color)) {
+			$this->template->content = "Rows/cols not set";
+		}
+		else if(!isset($color) & isset($rows_cols)) {
+			$this->template->content = "colors not set";
+		}
+		else{
+			// both set
+			$valid_rows_cols = true;
+			$valid_color = true;
+
+			if($color <= 0 | $color > 10) {
+				$valid_color = false;
+			}
+			if($rows_cols <= 0 | $rows_cols > 26 ) {
+				$valid_rows_cols = false;
+			}
+
+			if(!$valid_color) {
+				$this->template->content = "Invalid input for \"color\"";
+			}
+			else if(!$valid_rows_cols){
+				$this->template->content = "Invalid input for \"rows/cols\"";
+			}
+			else if(!$valid_color & !$valid_rows_cols) {
+				$this->template->content = "Invalid input for \"color\" and Invalid input for \"rows/cols\"";
+
+			}
+			else if($valid_color & $valid_rows_cols) {
+				$this->template->content = view::forge('MTNL/two', $data);
+			}
+
+		}
 		
 		$this->template->title = 'Color Coordinate Sheet';
-		$this->template->content = view::forge('MTNL/two', $data);
 		$this->template->currLink = "two.php";
 		$this->template->css = "mtnl.css";
 		$response = Response::forge($this->template, 200);
 		$response->set_header('Content-Type', 'text/html');
-	
+		
+
 		return $response;
 	}
+
 }
