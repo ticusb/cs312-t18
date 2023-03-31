@@ -159,10 +159,25 @@
                 
                 let f = false;
                 function generate_view() {
-                    document.getElementById("all").style.filter = "grayscale(100%)";
-                    document.getElementById("all").disabled = true;
-                    document.getElementsByTagName("*").disabled = true;
-                    
+                    function generate_view() {
+    
+    const newWindow = window.open('','_blank');
+    newWindow.document.write(document.documentElement.outerHTML);
+    newWindow.document.body.style.filter = 'grayscale(100%)';
+    
+    const elementt = newWindow.document.querySelectorAll('*');
+    elementt.forEach((element) => {
+        element.setAttribute('disabled', 'disabled');
+        element.style.pointerEvents = 'none';
+    });
+    var link = newWindow.document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "local_html/m1/assets/css/CC.css";
+    newWindow.document.head.appendChild(link);
+    newWindow.document.style.disabled=false;
+
+
+}
 
                 }
             </script>
