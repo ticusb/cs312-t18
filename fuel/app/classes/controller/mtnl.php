@@ -2,6 +2,7 @@
 
 class Controller_MTNL extends Controller_Template
 {
+
 	public function before()
 	{
 		parent::before();
@@ -10,6 +11,9 @@ class Controller_MTNL extends Controller_Template
 
 	public function action_index()
 	{
+
+		echo Asset::css("mtnl.css");
+
 		$data = array();
 		$this->template->title = 'Home Page';
 		$this->template->content = view::forge('MTNL/index', $data);
@@ -20,9 +24,6 @@ class Controller_MTNL extends Controller_Template
 		
 		$response = Response::forge($this->template, 200);
 		$response->set_header('Content-Type', 'text/html');
-		
-
-		
 	}
 
 	public function action_about(){
@@ -31,17 +32,14 @@ class Controller_MTNL extends Controller_Template
 		$this->template->content = view::forge('MTNL/one', $data);
 		$this->template->currLink = "one.php";
 		$this->template->css = "mtnl.css";
-		
 	}
 
 	public function action_CC(){
-
-		echo Asset::css("CC.css");
 		$data = array();
 		$rows_cols = isset($_GET["rows/columns"]) ? $_GET["rows/columns"] : '';
 		$color = isset($_GET["color"]) ? $_GET["color"] : '';
 
-		$data["rows"] = $rows_cols;
+		$this->template->rows_cols = $rows_cols;
 		$this->template->color = $color;
 		
 		$this->template->title = 'Color Coordinate Sheet';
@@ -50,9 +48,7 @@ class Controller_MTNL extends Controller_Template
 		$this->template->css = "mtnl.css";
 		$response = Response::forge($this->template, 200);
 		$response->set_header('Content-Type', 'text/html');
-		
-
+	
 		return $response;
 	}
-
 }
