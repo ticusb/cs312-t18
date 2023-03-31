@@ -7,43 +7,53 @@
                 var colorList = [
                             {
                                 hex: '#FF5733',
-                                name: 'Red'
+                                name: 'Red',
+                                disabled: false
                             },
                             {
                                 hex: '#FF8E00',
-                                name: 'Orange'
+                                name: 'Orange',
+                                disabled: false
                             },
                             {
                                 hex: '#FFFF00',
-                                name: 'Yellow'
+                                name: 'Yellow',
+                                disabled: false
                             },
                             {
                                 hex: '#32CD32',
-                                name: 'Green'
+                                name: 'Green',
+                                disabled: false
                             },
                             {
                                 hex: '#008080',
-                                name: 'Teal'
+                                name: 'Teal',
+                                disabled: false
                             },
                             {
                                 hex: '#4169E1',
-                                name: 'Blue'
+                                name: 'Blue',
+                                disabled: false
                             },
                             {
                                 hex: '#800080',
-                                name: 'Purple'
+                                name: 'Purple',
+                                disabled: false
                             },
                             {
                                 hex: '#964B00',
-                                name: 'Brown'
+                                name: 'Brown',
+                                disabled: false
                             },
                             {
                                 hex: '#1f1f1f',
-                                name: 'Black'
+                                name: 'Black',
+                                disabled: false
                             },
                             {
                                 hex: '#808080',
-                                name: 'Grey'
+                                name: 'Grey',
+                                disabled: false
                             }
                             ];
 
@@ -101,13 +111,16 @@
                         dropdowns.forEach((dropdown, i) => {
                             if (i !== index) {
                                 dropdown.options[selectedIndex].disabled = true;
-                            }
+                            } else
+                                dropdown.options[selectedIndex].disabled = false;
                             });
 
                             // Enable previously selected option in this dropdown
-                            if (dropdown.previousIndex !== undefined) {
-                                dropdown.options[dropdown.previousIndex].disabled = false;
-                            }
+                            // if (dropdown.previousIndex !== undefined) {
+                            //     console.log("disable the disable");
+                            //     dropdown.options[dropdown.previousIndex].getAttribute('disabled');
+                            //     dropdown.options[dropdown.previousIndex].removeAttribute('disabled');
+                            // }
 
                             // Remember index of selected option in this dropdown
                             dropdown.previousIndex = selectedIndex;
@@ -115,7 +128,6 @@
                             // Check for duplicate selections
                             for (let i = 0; i < dropdowns.length; i++) {
                                 if (i !== index && dropdowns[i].value === selectedValue) {
-                                    alert('Error: You cannot select the same color twice.');
                                     dropdown.options[selectedIndex].disabled = false;
                                     dropdown.options[dropdown.previousIndex].selected = true;
                                     return;
