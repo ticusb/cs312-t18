@@ -2,8 +2,6 @@
 
 class Controller_MTNL extends Controller_Template
 {
-	public $css = "mtnl.css";
-	
 
 	public function before()
 	{
@@ -22,20 +20,18 @@ class Controller_MTNL extends Controller_Template
 		$this->template->css = "mtnl.css";
 
 		$this->template->currLink = "index.php";
+		echo Asset::css("mtnl.css");
 		
 		$response = Response::forge($this->template, 200);
 		$response->set_header('Content-Type', 'text/html');
-		
-
-		
 	}
 
 	public function action_about(){
+		$data = array();
 		$this->template->title = 'About';
-		$this->template->content = view::forge('MTNL/one');
+		$this->template->content = view::forge('MTNL/one', $data);
 		$this->template->currLink = "one.php";
 		$this->template->css = "mtnl.css";
-		
 	}
 
 	public function action_CC(){
@@ -52,8 +48,7 @@ class Controller_MTNL extends Controller_Template
 		$this->template->css = "mtnl.css";
 		$response = Response::forge($this->template, 200);
 		$response->set_header('Content-Type', 'text/html');
-		
-
+	
 		return $response;
 	}
 }

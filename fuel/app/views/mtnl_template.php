@@ -17,6 +17,7 @@
             <?php echo Html::anchor("index.php/mtnl/cc", "Color Coordinates"); ?>
         </div>
     </nav>
+    <?php echo Asset::img("MTNLlogo.png", array('class' => 'logo-image')) ?>
     <?php echo $content; ?>
 </body>
 </html>

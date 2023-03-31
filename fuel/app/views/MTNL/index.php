@@ -1,8 +1,5 @@
 <main>
-    <section class="home-section">
-        <h1>MTNL</h1>
-       
-    </section>
+    <h1>MTNL</h1>
     <div>
         <p>
             We want to make the world a better place.
