@@ -161,11 +161,21 @@
                 function generate_view() {
     
                     const newWindow = window.open('','_blank');
-                    newWindow.document.write(document.documentElement.outerHTML);
+                    newWindow.document.write(document.documentElement.innerHTML);
                     newWindow.document.body.style.filter = 'grayscale(100%)';
                     
-                    const elementt = newWindow.document.querySelectorAll('*');
+                    const elementt = newWindow.document.querySelectorAll('select');
                     elementt.forEach((element) => {
+                        element.setAttribute('disabled', 'disabled');
+                        element.style.pointerEvents = 'none';
+                    });
+                    const elementts = newWindow.document.querySelectorAll('button');
+                    elementts.forEach((element) => {
+                        element.setAttribute('disabled', 'disabled');
+                        element.style.pointerEvents = 'none';
+                    });
+                    const elementtts = newWindow.document.querySelectorAll('nav');
+                    elementtts.forEach((element) => {
                         element.setAttribute('disabled', 'disabled');
                         element.style.pointerEvents = 'none';
                     });
