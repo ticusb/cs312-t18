@@ -27,5 +27,13 @@
             Hey, my name is Ticus Brandt and I am a Junior. I am a Computer Science major, and I love skiing! and I hate brocolli! XD 
             </p>
         </div>
+
+        <button onclick = "contact()">Contact Us!</button>
+        <script>
+            function contact(){
+                alert("Email: MTNL@gmail.com");
+            };
+        
+        </script>
     </section>
 </main>
