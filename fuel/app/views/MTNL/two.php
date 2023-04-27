@@ -7,53 +7,43 @@
                 var colorList = [
                             {
                                 hex: '#FF5733',
-                                name: 'Red',
-                                disabled: false
+                                name: 'Red'
                             },
                             {
                                 hex: '#FF8E00',
-                                name: 'Orange',
-                                disabled: false
+                                name: 'Orange'
                             },
                             {
                                 hex: '#FFFF00',
-                                name: 'Yellow',
-                                disabled: false
+                                name: 'Yellow'
                             },
                             {
                                 hex: '#32CD32',
-                                name: 'Green',
-                                disabled: false
+                                name: 'Green'
                             },
                             {
                                 hex: '#008080',
-                                name: 'Teal',
-                                disabled: false
+                                name: 'Teal'
                             },
                             {
                                 hex: '#4169E1',
-                                name: 'Blue',
-                                disabled: false
+                                name: 'Blue'
                             },
                             {
                                 hex: '#800080',
-                                name: 'Purple',
-                                disabled: false
+                                name: 'Purple'
                             },
                             {
                                 hex: '#964B00',
-                                name: 'Brown',
-                                disabled: false
+                                name: 'Brown'
                             },
                             {
                                 hex: '#1f1f1f',
-                                name: 'Black',
-                                disabled: false
+                                name: 'Black'
                             },
                             {
                                 hex: '#808080',
-                                name: 'Grey',
-                                disabled: false
+                                name: 'Grey'
                             }
                             ];
 
@@ -69,11 +59,24 @@
                 let tbl = document.getElementById("firstTbl");
                 console.log(colorList[1].hex);
 
+                let selectedColor = "";
+                let coordinates = {};
+
                 
                 for(let i = 0; i < color; i++) {
                     var newRow = tbl.insertRow();
+                    let radioButtonCell = newRow.insertCell();
                     let colorPickerCell = newRow.insertCell();
                     let colorCell = newRow.insertCell();
+                    let button = document.createElement("button");
+                    button.innerHTML = "Set Current";
+                    radioButtonCell.appendChild(button);
+                    button.type = "radio";
+                    button.name = "color";
+                    if(i == 0){
+                        button.checked = true;
+                        selectedColor = colorList[0].hex;
+                    }
                     for(let j = 0; j < 2; j++){
                         if(j == 0){
                             let dropdown = document.createElement("select");
@@ -111,16 +114,13 @@
                         dropdowns.forEach((dropdown, i) => {
                             if (i !== index) {
                                 dropdown.options[selectedIndex].disabled = true;
-                            } else
-                                dropdown.options[selectedIndex].disabled = false;
+                            }
                             });
 
                             // Enable previously selected option in this dropdown
-                            // if (dropdown.previousIndex !== undefined) {
-                            //     console.log("disable the disable");
-                            //     dropdown.options[dropdown.previousIndex].getAttribute('disabled');
-                            //     dropdown.options[dropdown.previousIndex].removeAttribute('disabled');
-                            // }
+                            if (dropdown.previousIndex !== undefined) {
+                                dropdown.options[dropdown.previousIndex].disabled = false;
+                            }
 
                             // Remember index of selected option in this dropdown
                             dropdown.previousIndex = selectedIndex;
@@ -128,6 +128,7 @@
                             // Check for duplicate selections
                             for (let i = 0; i < dropdowns.length; i++) {
                                 if (i !== index && dropdowns[i].value === selectedValue) {
+                                    alert('Error: You cannot select the same color twice.');
                                     dropdown.options[selectedIndex].disabled = false;
                                     dropdown.options[dropdown.previousIndex].selected = true;
                                     return;
