@@ -157,6 +157,7 @@
                         } else {
                             const td = tr.insertCell();
                             td.innerHTML = "";
+                            td.setAttribute('id', ("ABCDEFGHIJKLMNOPQRSTUVWXYZ".charAt(j - 1)) + i)
                         }
                         
                     }
