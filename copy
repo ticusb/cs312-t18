@@ -1,0 +1,4 @@
+cp ./fuel/app/views/MTNL/index.php ~/fuel/app/views/MTNL/index.php
+cp ./fuel/app/views/MTNL/one.php ~/fuel/app/views/MTNL/one.php
+cp ./fuel/app/views/MTNL/two.php ~/fuel/app/views/MTNL/two.php
+cp ./fuel/app/views/mtnl_template.php ~/fuel/app/views/mtnl_template.php
