@@ -60,7 +60,10 @@
                 console.log(colorList[1].hex);
 
                 let selectedColor = "";
+                let selectedTemp = "";
                 let coordinates = {};
+
+                document.addEventListener("DOMContentLoaded", () => {
 
                 
                 for(let i = 0; i < color; i++) {
@@ -68,6 +71,7 @@
                     let radioButtonCell = newRow.insertCell();
                     let colorPickerCell = newRow.insertCell();
                     let colorCell = newRow.insertCell();
+                    colorCell.setAttribute('className', "add_text");
                     let button = document.createElement("button");
                     button.innerHTML = "Set Current";
                     radioButtonCell.appendChild(button);
@@ -94,6 +98,9 @@
                             } 
                             dropdown.addEventListener("change", function() {
                                 colorCell.style.backgroundColor = this.value;
+                                selectedTemp = this.value;
+                                colorCell.setAttribute('id', "add_" + this.value);
+                                console.log(colorCell.getAttribute('id'));
                             });
                             colorPickerCell.append(dropdown);
                         }
@@ -102,7 +109,8 @@
                         }
                     }
                 }
-
+            });
+                document.addEventListener("DOMContentLoaded", () => {
                 const dropdowns = document.querySelectorAll('select');
 
                 dropdowns.forEach((dropdown, index) => {
@@ -137,8 +145,17 @@
                         
                     });
                 });
-                                
+            });
 
+            
+                                
+            document.addEventListener("DOMContentLoaded", () => {
+                document.addEventListener("click", (event)=> {
+                    if(event.target.className == "radioButton"){
+                        selectedColor = selectedTemp;
+                    }
+                });
+            });
                 
                 let tbl2 = document.getElementById("secondTbl");
 
@@ -157,11 +174,31 @@
                         } else {
                             const td = tr.insertCell();
                             td.innerHTML = "";
-                            td.setAttribute('id', ("ABCDEFGHIJKLMNOPQRSTUVWXYZ".charAt(j - 1)) + i)
+                            td.setAttribute('id', ("ABCDEFGHIJKLMNOPQRSTUVWXYZ".charAt(j - 1)) + i);
+                            td.setAttribute('class', "color_table");
                         }
                         
                     }
                 }
+
+            document.addEventListener("DOMContentLoaded", () => {
+                document.addEventListener('click', (event) => {
+                    if (event.target.className === "color_table") {
+                        console.log(selectedColor);
+                        const addTextElements = document.getElementsByClassName('add_text');
+                        console.log(addTextElements);
+
+                        for (const element of addTextElements) {
+                            console.log("Checking to see if " + element.getAttribute('id') + " is equal to " + "add_" + selectedColor);
+                            if (element.getAttribute('id') === "add_" + selectedColor) {
+                                console.log("Made it here");
+                                element.textContent = element.textContent + event.target.id;
+                            }
+                        }
+                    }
+                });
+            });
+
                 
                 function set_style(id, attr, value) {
                     var item = document.getElementById(id);
