@@ -71,7 +71,7 @@
                     let radioButtonCell = newRow.insertCell();
                     let colorPickerCell = newRow.insertCell();
                     let colorCell = newRow.insertCell();
-                    colorCell.setAttribute('className', "add_text");
+                    colorCell.setAttribute('class', 'add-text');
                     let button = document.createElement("button");
                     button.innerHTML = "Set Current";
                     radioButtonCell.appendChild(button);
@@ -184,15 +184,12 @@
             document.addEventListener("DOMContentLoaded", () => {
                 document.addEventListener('click', (event) => {
                     if (event.target.className === "color_table") {
-                        console.log(selectedColor);
-                        const addTextElements = document.getElementsByClassName('add_text');
+                        let addTextElements = document.getElementsByClassName('add-text');
                         console.log(addTextElements);
 
                         for (const element of addTextElements) {
-                            console.log("Checking to see if " + element.getAttribute('id') + " is equal to " + "add_" + selectedColor);
                             if (element.getAttribute('id') === "add_" + selectedColor) {
-                                console.log("Made it here");
-                                element.textContent = element.textContent + event.target.id;
+                                element.textContent = element.textContent + event.target.id + " ";
                             }
                         }
                     }
