@@ -188,6 +188,7 @@
                     }
                 }
 
+
             document.addEventListener("DOMContentLoaded", () => {
                 document.addEventListener('click', (event) => {
                     if (event.target.className === "color_table") {
@@ -198,7 +199,33 @@
 
                         for (const element of addTextElements) {
                             if (element.getAttribute('id') === "add_" + selectedColor) {
-                                element.textContent = element.textContent + event.target.id + " ";
+                                if (!element.textContent.includes(event.target.id.toString())) {
+                                    if (event.target.getAttribute("bgcolor") === null) {
+                                        element.textContent = element.textContent + event.target.id + " ";
+                                        element.textContent = element.textContent.split(" ").sort((a, b) => {
+                                            if (a.match(/[a-z]+|\d+/gi) && b.match(/[a-z]+|\d+/gi)) {
+                                                const [aLetter, aNum] = a.match(/[a-z]+|\d+/gi);
+                                                const [bLetter, bNum] = b.match(/[a-z]+|\d+/gi);
+                                                return aLetter.localeCompare(bLetter) || aNum - bNum;
+                                            }
+                                        }).join(" ");
+                                    } else {
+                                        element.textContent = element.textContent + event.target.id + " ";
+                                        element.textContent = element.textContent.split(" ").sort((a, b) => {
+                                            if (a.match(/[a-z]+|\d+/gi) && b.match(/[a-z]+|\d+/gi)) {
+                                                const [aLetter, aNum] = a.match(/[a-z]+|\d+/gi);
+                                                const [bLetter, bNum] = b.match(/[a-z]+|\d+/gi);
+                                                return aLetter.localeCompare(bLetter) || aNum - bNum;
+                                            }
+                                        }).join(" ");
+
+                                        for (const rm of addTextElements) {
+                                            if (rm.textContent.includes(event.target.id.toString()) && rm.id !== "add_" + selectedColor) {
+                                                rm.textContent = rm.textContent.slice(0, rm.textContent.indexOf(event.target.id)) + rm.textContent.slice(rm.textContent.indexOf(event.target.id) + 3);
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
