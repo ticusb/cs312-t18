@@ -78,10 +78,6 @@
                     button.name = "color";
                     button.id = "button_" + i;
                     button.setAttribute('class', 'button_list');
-                    if(i == 0){
-                        button.checked = true;
-                        selectedColor = colorList[0].hex;  //TODO: Change this so that default is not always red
-                    }
                     for(let j = 0; j < 2; j++){
                         if(j == 0){
                             let dropdown = document.createElement("select");
@@ -116,7 +112,6 @@
                     const dropdowns = document.querySelectorAll('select');
                     let selected_colors = [];
                     dropdowns.forEach((dropdown, index) => {
-                        
                         dropdown.addEventListener('change', (event) => {
 
                             // Reset each option to be enabled
@@ -131,8 +126,14 @@
                             for (let i = 0; i <  dropdowns.length; i++) {
                                 selected_colors.push(dropdowns[i].value);
                             }
+
                             //Remove all of the "colors" that do not have a selection
                             selected_colors = selected_colors.filter(item => item !== "Select a color");
+
+                            //If this is the first color, we set the default selected color to it
+                            if (selectedColor === "") {
+                                selectedColor = selected_colors[0];
+                            }
 
                             //Loop through and disable each color that should not be available to each dropdown
                             for (let i = 0; i < dropdowns.length; i++) {
@@ -191,16 +192,16 @@
 
             document.addEventListener("DOMContentLoaded", () => {
                 document.addEventListener('click', (event) => {
-                    if (event.target.className === "color_table") {
-
+                    if (event.target.className === "color_table" && selectedColor !== "") {
                         event.target.setAttribute('bgcolor', selectedColor);
-
                         let addTextElements = document.getElementsByClassName('add-text');
 
+                        //Loop through each color td element in the first table
                         for (const element of addTextElements) {
                             if (element.getAttribute('id') === "add_" + selectedColor) {
                                 if (!element.textContent.includes(event.target.id.toString())) {
                                     if (event.target.getAttribute("bgcolor") === null) {
+                                        //Update the text alphabetically
                                         element.textContent = element.textContent + event.target.id + " ";
                                         element.textContent = element.textContent.split(" ").sort((a, b) => {
                                             if (a.match(/[a-z]+|\d+/gi) && b.match(/[a-z]+|\d+/gi)) {
@@ -210,6 +211,7 @@
                                             }
                                         }).join(" ");
                                     } else {
+                                        //Update the text alphabetically
                                         element.textContent = element.textContent + event.target.id + " ";
                                         element.textContent = element.textContent.split(" ").sort((a, b) => {
                                             if (a.match(/[a-z]+|\d+/gi) && b.match(/[a-z]+|\d+/gi)) {
@@ -219,9 +221,11 @@
                                             }
                                         }).join(" ");
 
+                                        //Remove the cell coordinate from the one it was previously in
                                         for (const rm of addTextElements) {
                                             if (rm.textContent.includes(event.target.id.toString()) && rm.id !== "add_" + selectedColor) {
                                                 rm.textContent = rm.textContent.slice(0, rm.textContent.indexOf(event.target.id)) + rm.textContent.slice(rm.textContent.indexOf(event.target.id) + 3);
+                                                break;
                                             }
                                         }
                                     }
