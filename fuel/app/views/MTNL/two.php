@@ -110,41 +110,40 @@
                     }
                 }
             });
+            
                 document.addEventListener("DOMContentLoaded", () => {
-                const dropdowns = document.querySelectorAll('select');
 
-                dropdowns.forEach((dropdown, index) => {
-                    dropdown.addEventListener('change', (event) => {
-                        const selectedValue = event.target.value;
-                        const selectedIndex = event.target.selectedIndex;
-
-                        // Disable selected option in other dropdowns
-                        dropdowns.forEach((dropdown, i) => {
-                            if (i !== index) {
-                                dropdown.options[selectedIndex].disabled = true;
-                            }
-                            });
-
-                            // Enable previously selected option in this dropdown
-                            if (dropdown.previousIndex !== undefined) {
-                                dropdown.options[dropdown.previousIndex].disabled = false;
-                            }
-
-                            // Remember index of selected option in this dropdown
-                            dropdown.previousIndex = selectedIndex;
-
-                            // Check for duplicate selections
-                            for (let i = 0; i < dropdowns.length; i++) {
-                                if (i !== index && dropdowns[i].value === selectedValue) {
-                                    alert('Error: You cannot select the same color twice.');
-                                    dropdown.options[selectedIndex].disabled = false;
-                                    dropdown.options[dropdown.previousIndex].selected = true;
-                                    return;
-                            }  
-                        }
+                    const dropdowns = document.querySelectorAll('select');
+                    let selected_colors = [];
+                    dropdowns.forEach((dropdown, index) => {
                         
+                        dropdown.addEventListener('change', (event) => {
+
+                            for (let i = 0; i < dropdowns.length; i++) {
+                                for (let op = 0; op < dropdowns[i].options.length; op++) {
+                                    dropdowns[i].options[op].disabled = false;
+                                }
+                            }
+
+
+                            selected_colors.length = 0;
+                            for (let i = 0; i <  dropdowns.length; i++) {
+                                selected_colors.push(dropdowns[i].value);
+                            }
+                            selected_colors = selected_colors.filter(item => item !== "Select a color");
+
+                            for (let i = 0; i < dropdowns.length; i++) {
+                                for (let op = 0; op < dropdowns[i].options.length; op++) {
+                                    if (selected_colors.includes(dropdowns[i].options[op].value)) {
+                                        if (dropdowns[i].options[op].value === dropdowns[i].value) continue;
+                                        dropdowns[i].options[op].disabled = true;
+                                    }
+
+                                }
+                            }
+
+                        });
                     });
-                });
             });
 
             
