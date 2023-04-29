@@ -57,7 +57,6 @@
                 let color = urlParams.get('color');
 
                 let tbl = document.getElementById("firstTbl");
-                console.log(colorList[1].hex);
 
                 let selectedColor = "";
                 let selectedTemp = "";
@@ -77,9 +76,11 @@
                     radioButtonCell.appendChild(button);
                     button.type = "radio";
                     button.name = "color";
+                    button.id = "button_" + i;
+                    button.setAttribute('class', 'button_list');
                     if(i == 0){
                         button.checked = true;
-                        selectedColor = colorList[0].hex;
+                        selectedColor = colorList[0].hex;  //TODO: Change this so that default is not always red
                     }
                     for(let j = 0; j < 2; j++){
                         if(j == 0){
@@ -100,7 +101,6 @@
                                 colorCell.style.backgroundColor = this.value;
                                 selectedTemp = this.value;
                                 colorCell.setAttribute('id', "add_" + this.value);
-                                console.log(colorCell.getAttribute('id'));
                             });
                             colorPickerCell.append(dropdown);
                         }
@@ -151,8 +151,14 @@
                                 
             document.addEventListener("DOMContentLoaded", () => {
                 document.addEventListener("click", (event)=> {
-                    if(event.target.className == "radioButton"){
-                        selectedColor = selectedTemp;
+                    if(event.target.className === "button_list"){
+                        let addTextElements = document.getElementsByClassName('add-text');
+                        for (let i = 0; i < addTextElements.length; i++) {
+                            if (i.toString() === event.target.id.substring(7)) {
+                                selectedColor = addTextElements[i].getAttribute('id').substring(addTextElements[i].getAttribute('id').indexOf('#'));
+                                break;
+                            }
+                        }
                     }
                 });
             });
@@ -185,7 +191,7 @@
                 document.addEventListener('click', (event) => {
                     if (event.target.className === "color_table") {
                         let addTextElements = document.getElementsByClassName('add-text');
-                        console.log(addTextElements);
+                        console.log("Selected Color: " + selectedColor);
 
                         for (const element of addTextElements) {
                             if (element.getAttribute('id') === "add_" + selectedColor) {
