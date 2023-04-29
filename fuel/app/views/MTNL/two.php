@@ -119,19 +119,22 @@
                         
                         dropdown.addEventListener('change', (event) => {
 
+                            // Reset each option to be enabled
                             for (let i = 0; i < dropdowns.length; i++) {
                                 for (let op = 0; op < dropdowns[i].options.length; op++) {
                                     dropdowns[i].options[op].disabled = false;
                                 }
                             }
 
-
+                            //Reset the selected colors and then fill in the newly selected colors
                             selected_colors.length = 0;
                             for (let i = 0; i <  dropdowns.length; i++) {
                                 selected_colors.push(dropdowns[i].value);
                             }
+                            //Remove all of the "colors" that do not have a selection
                             selected_colors = selected_colors.filter(item => item !== "Select a color");
 
+                            //Loop through and disable each color that should not be available to each dropdown
                             for (let i = 0; i < dropdowns.length; i++) {
                                 for (let op = 0; op < dropdowns[i].options.length; op++) {
                                     if (selected_colors.includes(dropdowns[i].options[op].value)) {
@@ -141,7 +144,6 @@
 
                                 }
                             }
-
                         });
                     });
             });
@@ -189,8 +191,10 @@
             document.addEventListener("DOMContentLoaded", () => {
                 document.addEventListener('click', (event) => {
                     if (event.target.className === "color_table") {
+
+                        event.target.setAttribute('bgcolor', selectedColor);
+
                         let addTextElements = document.getElementsByClassName('add-text');
-                        console.log("Selected Color: " + selectedColor);
 
                         for (const element of addTextElements) {
                             if (element.getAttribute('id') === "add_" + selectedColor) {
