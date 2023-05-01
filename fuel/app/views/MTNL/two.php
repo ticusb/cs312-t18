@@ -97,6 +97,13 @@
                                 colorCell.style.backgroundColor = this.value;
                                 selectedTemp = this.value;
                                 colorCell.setAttribute('id', "add_" + this.value);
+                                colorCell.style.color = "black";
+                                console.log(this.value);
+                                if (parseInt(this.value.substring(1, 3), 16) < 128) {
+                                    colorCell.style.color = "white";
+                                }
+                                colorCell.style.fontWeight = "bold";
+                                
                             });
                             colorPickerCell.append(dropdown);
                         }
@@ -108,11 +115,16 @@
             });
             
                 document.addEventListener("DOMContentLoaded", () => {
-
+                    let previousColor = "infinite";
                     const dropdowns = document.querySelectorAll('select');
                     let selected_colors = [];
                     dropdowns.forEach((dropdown, index) => {
+                        dropdown.addEventListener('mousedown', (event) => {
+                            previousColor = event.target.value;
+                            // console.log(previousColor);
+                        });
                         dropdown.addEventListener('change', (event) => {
+                            
 
                             // Reset each option to be enabled
                             for (let i = 0; i < dropdowns.length; i++) {
@@ -133,6 +145,20 @@
                             //If this is the first color, we set the default selected color to it
                             if (selectedColor === "") {
                                 selectedColor = selected_colors[0];
+                            } else {
+                                for (let i = 1; i < rows + 1; i++) {
+                                    for (let j = 1; j < columns +  1; j++) {
+                                        try {
+                                            if (document.getElementById("ABCDEFGHIJKLMNOPQRSTUVWXYZ".charAt(j - 1).toString() + i.toString()).getAttribute('bgcolor').includes(previousColor)) {
+                                                document.getElementById("ABCDEFGHIJKLMNOPQRSTUVWXYZ".charAt(j - 1).toString() + i.toString()).setAttribute('bgcolor', event.target.value);
+                                            }
+                                            if (previousColor === selectedColor) {
+                                                selectedColor = event.target.value;
+                                            }
+                                        } catch (error) {}
+
+                                    }
+                                }
                             }
 
                             //Loop through and disable each color that should not be available to each dropdown
@@ -145,6 +171,8 @@
 
                                 }
                             }
+
+
                         });
                     });
             });
@@ -184,6 +212,7 @@
                             td.innerHTML = "";
                             td.setAttribute('id', ("ABCDEFGHIJKLMNOPQRSTUVWXYZ".charAt(j - 1)) + i);
                             td.setAttribute('class', "color_table");
+                            td.setAttribute('bgcolor', '');
                         }
                         
                     }
