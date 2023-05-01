@@ -133,6 +133,14 @@
                                 }
                             }
 
+                            for (let op = 0; op < dropdown.options.length; op++) {
+                                //TODO: set option at event.target.value to have the class checked
+                                dropdown.options[op].classList.remove('checked');
+                                if (dropdown.options[op].value === event.target.value) {
+                                    dropdown.options[op].classList.add('checked');
+                                }
+                            }
+
                             //Reset the selected colors and then fill in the newly selected colors
                             selected_colors.length = 0;
                             for (let i = 0; i <  dropdowns.length; i++) {
@@ -281,20 +289,30 @@
                     newWindow.document.write(document.documentElement.innerHTML);
                     newWindow.document.body.style.filter = 'grayscale(100%)';
                     
-                    const elementt = newWindow.document.querySelectorAll('select');
-                    elementt.forEach((element) => {
+                    const select_elements = newWindow.document.querySelectorAll('select');
+                    select_elements.forEach((element) => {
                         element.setAttribute('disabled', 'disabled');
                         element.style.pointerEvents = 'none';
+                        let count = 0;
+                        for (let i = 0; i < element.options.length; i++) {
+                            if (element.options[i].classList.contains('checked')) {
+                                element.value = element.options[i].value;
+                                count++;
+                            }
+                        }
+                        if (count === 0) {
+                            element.parentNode.parentNode.remove();
+                        }
                     });
-                    const elementts = newWindow.document.querySelectorAll('button');
-                    elementts.forEach((element) => {
-                        element.setAttribute('disabled', 'disabled');
-                        element.style.pointerEvents = 'none';
+                    const button_elements = newWindow.document.querySelectorAll('button');
+                    button_elements.forEach((element) => {
+                        const row = element.closest('tr');
+                        element.parentNode.removeChild(element);
+                        row.querySelector('td:first-child').parentNode.removeChild(row.querySelector('td:first-child'));
                     });
-                    const elementtts = newWindow.document.querySelectorAll('nav');
-                    elementtts.forEach((element) => {
-                        element.setAttribute('disabled', 'disabled');
-                        element.style.pointerEvents = 'none';
+                    const nav_elements = newWindow.document.querySelectorAll('nav');
+                    nav_elements.forEach((element) => {
+                        element.parentNode.removeChild(element);
                     });
                     var link = newWindow.document.createElement("link");
                     link.rel = "stylesheet";
