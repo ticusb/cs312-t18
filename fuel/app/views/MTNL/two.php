@@ -294,12 +294,14 @@
                         element.setAttribute('disabled', 'disabled');
                         element.style.pointerEvents = 'none';
                         let count = 0;
-                        for (let i = 0; i < element.options.length; i++) {
-                            if (element.options[i].classList.contains('checked')) {
-                                element.value = element.options[i].value;
-                                count++;
-                            }
+                        Array.from(element.options).forEach((option) => {
+                        if (option.classList.contains('checked')) {
+                            const parent = element.parentNode;
+                            parent.textContent = option.textContent;
+                            element.remove();
+                            count++;
                         }
+                        });
                         if (count === 0) {
                             element.parentNode.parentNode.remove();
                         }
@@ -308,17 +310,27 @@
                     button_elements.forEach((element) => {
                         const row = element.closest('tr');
                         element.parentNode.removeChild(element);
+                        try {
                         row.querySelector('td:first-child').parentNode.removeChild(row.querySelector('td:first-child'));
+                        } catch (error) {}
                     });
                     const nav_elements = newWindow.document.querySelectorAll('nav');
                     nav_elements.forEach((element) => {
                         element.parentNode.removeChild(element);
                     });
+
+                    const color_rows = newWindow.document.querySelectorAll('.add_text');
+                    color_rows.forEach((element, index) => {
+                        const originalValue = document.querySelectorAll('.add_text')[index].textContent;
+                        element.textContent = originalValue;
+                    });
+
+
                     var link = newWindow.document.createElement("link");
                     link.rel = "stylesheet";
                     link.href = "local_html/m1/assets/css/CC.css";
                     newWindow.document.head.appendChild(link);
-                    newWindow.document.style.disabled=false;
+                    // newWindow.document.style.disabled=false;
 
 
                 }
