@@ -55,7 +55,8 @@ table {
     margin: auto;
 }
 #firstTbl {
-    width: 500px;
+    width: 400px;
+    display: inline-block;
 }
 
 #firstTbl tr {

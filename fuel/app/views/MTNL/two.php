@@ -1,7 +1,15 @@
 <main id = "all">
     <section class="cc" id = "interactable">
         <h1>Color Coordinate Generation</h1>
-        <table id="firstTbl"></table>
+        <div id="header_tables">
+            <table id="firstTbl"></table>
+            <div id="add_color">
+                <p> Add new color </p>
+                <input id="new_color_name" class="color_inputs" placeholder="Color Name"><br>
+                <br><input id="new_color_hext" class="color_inputs" placeholder="Color Hex Value"><br><br>
+                <button id="submit_color">Submit</button>
+            </div>
+        </div>
         <table id="secondTbl"></table>
             <script type="text/javascript">
                 var colorList = [
@@ -57,10 +65,26 @@
                 let color = urlParams.get('color');
 
                 let tbl = document.getElementById("firstTbl");
+                let color_picker = document.getElementById("add_color");
+                let header_tables = document.getElementById("header_tables");
+                let inps = document.getElementsByClassName("color_inputs");
+                Array.from(inps).forEach ((input) => {
+                    input.style.width = "120px";
+                });
+                header_tables.style.minWidth = "524px";
+                header_tables.style.maxWidth = "524px";
+                header_tables.style.margin = "0 auto";
+                tbl.style.display = "inline-block";
+                tbl.style.width = "400px";
+                color_picker.style.width = "120px";
+                color_picker.style.display = "inline-block";
+                color_picker.style.float = "left";
 
                 let selectedColor = "";
                 let selectedTemp = "";
                 let coordinates = {};
+
+
 
                 document.addEventListener("DOMContentLoaded", () => {
 
