@@ -1,13 +1,55 @@
+<?php
+// Create a connection to the MySQL database
+// $conn = new mysqli("localhost", "", "", "");
+
+// $sql = "CREATE TABLE colors (
+//     id INT AUTO_INCREMENT PRIMARY KEY,
+//     name VARCHAR(255) UNIQUE,
+//     hex_value VARCHAR(7) UNIQUE
+// )";
+
+// // Execute the SQL query to create the table
+// if ($conn->query($sql) === TRUE) {} else {
+//     echo "Error creating table: " . $conn->error;
+// }
+
+// // Check if the form was submitted
+// if (isset($_POST["submit"])) {
+//     // Retrieve the form data
+//     $name = $_POST["new_color_name"];
+//     $hex_value = $_POST["new_color_hex"];
+
+//     // Prepare the SQL query
+//     $stmt = $conn->prepare("INSERT INTO colors (name, hex_value) VALUES (?, ?)");
+//     $stmt->bind_param("ss", $name, $hex_value);
+
+//     // Execute the SQL query
+//     $stmt->execute();
+
+//     // Close the statement
+//     $stmt->close();
+
+//     // Redirect to the same page to prevent form resubmission
+//     header("Location: " . $_SERVER["PHP_SELF"]);
+//     exit();
+// }
+
+// // Close the database connection
+// $conn->close();
+?>
+
 <main id = "all">
     <section class="cc" id = "interactable">
         <h1>Color Coordinate Generation</h1>
         <div id="header_tables">
             <table id="firstTbl"></table>
             <div id="add_color">
-                <p> Add new color </p>
-                <input id="new_color_name" class="color_inputs" placeholder="Color Name"><br>
-                <br><input id="new_color_hext" class="color_inputs" placeholder="Color Hex Value"><br><br>
-                <button id="submit_color">Submit</button>
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+                    <p> Add new color </p>
+                    <input id="new_color_name" class="color_inputs" name="new_color_name" placeholder="Color Name"><br>
+                    <br><input id="new_color_hex" class="color_inputs" name="new_color_hex" placeholder="Color Hex Value"><br><br>
+                    <button id="submit_color" name="submit">Submit</button>
+                </form>
             </div>
         </div>
         <table id="secondTbl"></table>
@@ -136,6 +178,13 @@
                         }
                     }
                 }
+                let tmp_row = tbl.insertRow();
+                let eraser = tmp_row.insertCell();
+                eraser.textContent = "Eraser";
+                eraser.textAlign = "center";
+                eraser.colSpan = "3";
+                eraser.setAttribute ('id', 'eraser');
+                tbl.style.marginBottom = "4px";
             });
             
                 document.addEventListener("DOMContentLoaded", () => {
@@ -293,71 +342,100 @@
                                 }
                             }
                         }
+                    } else if (event.target.className === "color_table") {
+                        let addTextElements = document.getElementsByClassName('add-text');
+                        for (const rm of addTextElements) {
+                            if (rm.textContent.includes(event.target.id.toString())) {
+                                rm.textContent = rm.textContent.slice(0, rm.textContent.indexOf(event.target.id)) + rm.textContent.slice(rm.textContent.indexOf(event.target.id) + 3);
+                                break;
+                            }
+                        }
+                        event.target.setAttribute('bgcolor', "");
+                    }
+                });
+            });
+
+            let eraser_color = "";
+            document.addEventListener("DOMContentLoaded", () => {
+                document.addEventListener("click", (event)=> {
+                    if (event.target.id === "eraser") {
+                        if (event.target.classList.contains('selected')) {
+                            event.target.classList.remove('selected');
+                            selectedColor = eraser_color;
+                            event.target.style.backgroundColor = "";
+                            event.target.style.color = "black";
+                        } else {
+                            event.target.classList.add('selected');
+                            event.target.style.backgroundColor = "#A9A9A9";
+                            event.target.style.color = "white";
+                            eraser_color = selectedColor;
+                            selectedColor = "";
+                        }
                     }
                 });
             });
 
                 
-                function set_style(id, attr, value) {
-                    var item = document.getElementById(id);
-                    item.style[attr] = value;
-                }
-                function get_style (id, attr) {
-                    return document.getElementById(id).style[attr];
-                }
+            function set_style(id, attr, value) {
+                var item = document.getElementById(id);
+                item.style[attr] = value;
+            }
+            function get_style (id, attr) {
+                return document.getElementById(id).style[attr];
+            }
+            
+            let f = false;
+            function generate_view() {
+
+                const newWindow = window.open('','_blank');
+                newWindow.document.write(document.documentElement.innerHTML);
+                newWindow.document.body.style.filter = 'grayscale(100%)';
                 
-                let f = false;
-                function generate_view() {
-    
-                    const newWindow = window.open('','_blank');
-                    newWindow.document.write(document.documentElement.innerHTML);
-                    newWindow.document.body.style.filter = 'grayscale(100%)';
-                    
-                    const select_elements = newWindow.document.querySelectorAll('select');
-                    select_elements.forEach((element) => {
-                        element.setAttribute('disabled', 'disabled');
-                        element.style.pointerEvents = 'none';
-                        let count = 0;
-                        Array.from(element.options).forEach((option) => {
-                        if (option.classList.contains('checked')) {
-                            const parent = element.parentNode;
-                            parent.textContent = option.textContent;
-                            element.remove();
-                            count++;
-                        }
-                        });
-                        if (count === 0) {
-                            element.parentNode.parentNode.remove();
-                        }
+                const select_elements = newWindow.document.querySelectorAll('select');
+                select_elements.forEach((element) => {
+                    element.setAttribute('disabled', 'disabled');
+                    element.style.pointerEvents = 'none';
+                    let count = 0;
+                    Array.from(element.options).forEach((option) => {
+                    if (option.classList.contains('checked')) {
+                        const parent = element.parentNode;
+                        parent.textContent = option.textContent;
+                        element.remove();
+                        count++;
+                    }
                     });
-                    const button_elements = newWindow.document.querySelectorAll('button');
-                    button_elements.forEach((element) => {
-                        const row = element.closest('tr');
-                        element.parentNode.removeChild(element);
-                        try {
-                        row.querySelector('td:first-child').parentNode.removeChild(row.querySelector('td:first-child'));
-                        } catch (error) {}
-                    });
-                    const nav_elements = newWindow.document.querySelectorAll('nav');
-                    nav_elements.forEach((element) => {
-                        element.parentNode.removeChild(element);
-                    });
+                    if (count === 0) {
+                        element.parentNode.parentNode.remove();
+                    }
+                });
+                const button_elements = newWindow.document.querySelectorAll('button');
+                button_elements.forEach((element) => {
+                    const row = element.closest('tr');
+                    element.parentNode.removeChild(element);
+                    try {
+                    row.querySelector('td:first-child').parentNode.removeChild(row.querySelector('td:first-child'));
+                    } catch (error) {}
+                });
+                const nav_elements = newWindow.document.querySelectorAll('nav');
+                nav_elements.forEach((element) => {
+                    element.parentNode.removeChild(element);
+                });
 
-                    const color_rows = newWindow.document.querySelectorAll('.add_text');
-                    color_rows.forEach((element, index) => {
-                        const originalValue = document.querySelectorAll('.add_text')[index].textContent;
-                        element.textContent = originalValue;
-                    });
-
-
-                    var link = newWindow.document.createElement("link");
-                    link.rel = "stylesheet";
-                    link.href = "local_html/m1/assets/css/CC.css";
-                    newWindow.document.head.appendChild(link);
-                    // newWindow.document.style.disabled=false;
+                const color_rows = newWindow.document.querySelectorAll('.add_text');
+                color_rows.forEach((element, index) => {
+                    const originalValue = document.querySelectorAll('.add_text')[index].textContent;
+                    element.textContent = originalValue;
+                });
 
 
-                }
+                var link = newWindow.document.createElement("link");
+                link.rel = "stylesheet";
+                link.href = "local_html/m1/assets/css/CC.css";
+                newWindow.document.head.appendChild(link);
+                // newWindow.document.style.disabled=false;
+
+
+            }
             </script>
             <button class="button_one" onclick="generate_view();">
                 Print
