@@ -133,6 +133,7 @@
                 
                 for(let i = 0; i < color; i++) {
                     var newRow = tbl.insertRow();
+                    newRow.setAttribute('class', 'main-table-row')
                     let radioButtonCell = newRow.insertCell();
                     let colorPickerCell = newRow.insertCell();
                     let colorCell = newRow.insertCell();
@@ -438,6 +439,10 @@
                         element.textContent = originalValue;
                         element.style.backgroundColor = "";
                         element.style.color = "";
+                        element.style.minWidth = "350px";
+                        element.style.maxWidth = "350px";
+                        element.closest('tr').querySelector('td:first-child').style.minWidth = "100px";
+                        element.closest('tr').querySelector('td:first-child').style.maxWidth = "100px";
                     });
 
                     const erase = newWindow.document.querySelector('#eraser');
@@ -451,6 +456,11 @@
                     if (add_remove) {
                         add_remove.remove();
                     }
+
+                    const lower_cells = newWindow.document.querySelectorAll('.color_table');
+                    lower_cells.forEach ((cell) => {
+                        cell.setAttribute('bgcolor', '');
+                    });
 
 
                     var link = newWindow.document.createElement("link");
