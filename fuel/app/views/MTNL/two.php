@@ -41,8 +41,8 @@
 <main id = "all">
     <section class="cc" id = "interactable">
         <h1>Color Coordinate Generation</h1>
-        <div id="header_tables">
-            <table id="firstTbl"></table>
+        <div id="header_tables" style="padding: 4px; margin-bottom: 4px;">
+            <table id="firstTbl" class="print_view"></table>
             <div id="add_color">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                     <p> Add new color </p>
@@ -52,7 +52,7 @@
                 </form>
             </div>
         </div>
-        <table id="secondTbl"></table>
+        <table id="secondTbl" class="print_view"></table>
             <script type="text/javascript">
                 var colorList = [
                             {
@@ -184,7 +184,8 @@
                 eraser.textAlign = "center";
                 eraser.colSpan = "3";
                 eraser.setAttribute ('id', 'eraser');
-                tbl.style.marginBottom = "4px";
+                // tbl.style.marginBottom = "4px";
+                // document.getElementById('header_tables').style.marginBotton = "30px";
             });
             
                 document.addEventListener("DOMContentLoaded", () => {
@@ -387,7 +388,7 @@
             let f = false;
             function generate_view() {
 
-                const newWindow = window.open('','_blank');
+                const newWindow = window.open('Print','_blank');
                 newWindow.document.write(document.documentElement.innerHTML);
                 newWindow.document.body.style.filter = 'grayscale(100%)';
                 
@@ -421,23 +422,35 @@
                     element.parentNode.removeChild(element);
                 });
 
-                const color_rows = newWindow.document.querySelectorAll('.add_text');
+                const color_rows = newWindow.document.querySelectorAll('.add-text');
                 color_rows.forEach((element, index) => {
-                    const originalValue = document.querySelectorAll('.add_text')[index].textContent;
+                    const originalValue = document.querySelectorAll('.add-text')[index].textContent;
                     element.textContent = originalValue;
+                    element.style.backgroundColor = "";
+                    element.style.color = "";
                 });
+
+                const erase = newWindow.document.querySelector('#eraser');
+                if (erase) {
+                    erase.parentNode.remove();
+                }
+                const print_button = newWindow.document.querySelector('#print_button');
+                if (print_button) {
+                    print_button.remove();
+                }
+                const add_remove = newWindow.document.querySelector('#add_color');
+                if (add_remove) {
+                    add_remove.remove();
+                }
 
 
                 var link = newWindow.document.createElement("link");
                 link.rel = "stylesheet";
                 link.href = "local_html/m1/assets/css/CC.css";
-                newWindow.document.head.appendChild(link);
-                // newWindow.document.style.disabled=false;
-
-
             }
+
             </script>
-            <button class="button_one" onclick="generate_view();">
+            <button class="button_one" id="print_button" onclick="generate_view();">
                 Print
             </button>
     </section>
