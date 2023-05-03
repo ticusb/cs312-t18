@@ -164,7 +164,6 @@
                                 selectedTemp = this.value;
                                 colorCell.setAttribute('id', "add_" + this.value);
                                 colorCell.style.color = "black";
-                                console.log(this.value);
                                 if (parseInt(this.value.substring(1, 3), 16) < 128) {
                                     colorCell.style.color = "white";
                                 }
@@ -195,7 +194,6 @@
                     dropdowns.forEach((dropdown, index) => {
                         dropdown.addEventListener('mousedown', (event) => {
                             previousColor = event.target.value;
-                            // console.log(previousColor);
                         });
                         dropdown.addEventListener('change', (event) => {
                             
@@ -385,72 +383,84 @@
                 return document.getElementById(id).style[attr];
             }
             
+            function removePrintButton(newWindow, attempts = 0) {
+                const printButton = newWindow.document.getElementsByName('print_button')[0];
+                if (printButton) {
+                    printButton.remove();
+                } else if (attempts < 10) {
+                    setTimeout(() => {
+                        removePrintButton(newWindow, attempts + 1);
+                    }, 10);
+                }
+            }
             let f = false;
             function generate_view() {
-
                 const newWindow = window.open('Print','_blank');
-                newWindow.document.write(document.documentElement.innerHTML);
+                newWindow.document.write(document.documentElement.outerHTML);
                 newWindow.document.body.style.filter = 'grayscale(100%)';
                 
-                const select_elements = newWindow.document.querySelectorAll('select');
-                select_elements.forEach((element) => {
-                    element.setAttribute('disabled', 'disabled');
-                    element.style.pointerEvents = 'none';
-                    let count = 0;
-                    Array.from(element.options).forEach((option) => {
-                    if (option.classList.contains('checked')) {
-                        const parent = element.parentNode;
-                        parent.textContent = option.textContent;
-                        element.remove();
-                        count++;
-                    }
+                    newWindow.document.getElementById('secondTbl').remove();
+                    newWindow.document.getElementsByTagName('body')[0].appendChild(document.getElementById('secondTbl').cloneNode(true));
+                    
+                    const select_elements = newWindow.document.querySelectorAll('select');
+                    select_elements.forEach((element) => {
+                        element.setAttribute('disabled', 'disabled');
+                        element.style.pointerEvents = 'none';
+                        let count = 0;
+                        Array.from(element.options).forEach((option) => {
+                        if (option.classList.contains('checked')) {
+                            const parent = element.parentNode;
+                            parent.textContent = option.textContent;
+                            element.remove();
+                            count++;
+                        }
+                        });
+                        if (count === 0) {
+                            element.parentNode.parentNode.remove();
+                        }
                     });
-                    if (count === 0) {
-                        element.parentNode.parentNode.remove();
+                    const button_elements = newWindow.document.querySelectorAll('.button_list');
+                    button_elements.forEach((element) => {
+                        const row = element.closest('tr');
+                        element.parentNode.removeChild(element);
+                        try {
+                        row.querySelector('td:first-child').parentNode.removeChild(row.querySelector('td:first-child'));
+                        } catch (error) {}
+                    });
+                    const nav_elements = newWindow.document.querySelectorAll('nav');
+                    nav_elements.forEach((element) => {
+                        element.parentNode.removeChild(element);
+                    });
+
+                    const color_rows = newWindow.document.querySelectorAll('.add-text');
+                    color_rows.forEach((element, index) => {
+                        const originalValue = document.querySelectorAll('.add-text')[index].textContent;
+                        element.textContent = originalValue;
+                        element.style.backgroundColor = "";
+                        element.style.color = "";
+                    });
+
+                    const erase = newWindow.document.querySelector('#eraser');
+                    if (erase) {
+                        erase.parentNode.remove();
                     }
-                });
-                const button_elements = newWindow.document.querySelectorAll('button');
-                button_elements.forEach((element) => {
-                    const row = element.closest('tr');
-                    element.parentNode.removeChild(element);
-                    try {
-                    row.querySelector('td:first-child').parentNode.removeChild(row.querySelector('td:first-child'));
-                    } catch (error) {}
-                });
-                const nav_elements = newWindow.document.querySelectorAll('nav');
-                nav_elements.forEach((element) => {
-                    element.parentNode.removeChild(element);
-                });
 
-                const color_rows = newWindow.document.querySelectorAll('.add-text');
-                color_rows.forEach((element, index) => {
-                    const originalValue = document.querySelectorAll('.add-text')[index].textContent;
-                    element.textContent = originalValue;
-                    element.style.backgroundColor = "";
-                    element.style.color = "";
-                });
+                    removePrintButton(newWindow, 0);
 
-                const erase = newWindow.document.querySelector('#eraser');
-                if (erase) {
-                    erase.parentNode.remove();
-                }
-                const print_button = newWindow.document.querySelector('#print_button');
-                if (print_button) {
-                    print_button.remove();
-                }
-                const add_remove = newWindow.document.querySelector('#add_color');
-                if (add_remove) {
-                    add_remove.remove();
-                }
+                    const add_remove = newWindow.document.querySelector('#add_color');
+                    if (add_remove) {
+                        add_remove.remove();
+                    }
 
 
-                var link = newWindow.document.createElement("link");
-                link.rel = "stylesheet";
-                link.href = "local_html/m1/assets/css/CC.css";
+                    var link = newWindow.document.createElement("link");
+                    link.rel = "stylesheet";
+                    link.href = "local_html/m1/assets/css/CC.css";
+                
             }
 
             </script>
-            <button class="button_one" id="print_button" onclick="generate_view();">
+            <button class="button_one" id="print_button" name="print_button" onclick="generate_view();">
                 Print
             </button>
     </section>
