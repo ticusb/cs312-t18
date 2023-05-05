@@ -2,7 +2,7 @@
 
 class MyDB extends SQLite3 {
       function __construct() {
-         $this->open('mtnl.db');
+         $this->open('/s/chopin/g/under/levib02/fuel/db/mtnl.db');
       }
 }
 
@@ -88,25 +88,6 @@ class Controller_MTNL extends Controller_Template
 
 		}
 
-		$db = new MyDB();
-		if(!$db) {
-			echo $db->lastErrorMsg();
-		} else {
-			echo "Opened database successfully\n";
-		}
-
-		$sql = "SELECT count(*) from colors";
-		
-
-		$ret = $db->query($sql);
-
-		echo $ret;
-		echo "Operation done successfully\n";
-		$db->close();
-
-		
-
-
 		$this->template->title = 'Color Coordinate Sheet';
 		$this->template->currLink = "two.php";
 		$this->template->css = "mtnl.css";
@@ -117,4 +98,37 @@ class Controller_MTNL extends Controller_Template
 		return $response;
 	}
 
+	public function action_colors(){
+		$db = new MyDB();
+		if(!$db) {
+			echo $db->lastErrorMsg();
+		} 
+
+		if (Input::method() == 'POST') {
+        // Retrieve data from the request body
+			$name = Input::post('name');
+			$email = Input::post('hex');
+			$type = Input::post('type');
+
+		}
+		 else if (Input::method() == 'GET'){
+			
+			$sql = "SELECT * from colors";
+
+			$result = $db->query($sql);
+
+			$data = array();
+			while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+				$data[] = $row;
+			}
+
+			$response = Response::forge(json_encode($data), 200);
+			$response->set_header('Content-Type', 'application/json');
+
+			return $response;
+		}
+	}	
+
 }
+
+
