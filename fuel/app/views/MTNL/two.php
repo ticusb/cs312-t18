@@ -40,7 +40,7 @@
         <div id="header_tables" style="padding: 4px; margin-bottom: 4px;">
             <table id="firstTbl" class="print_view"></table>
             <div id="add_color">
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+                <form method="POST">
                     <p> Add new color </p>
                     <input id="new_color_name" class="color_inputs" name="new_color_name" placeholder="Color Name"><br>
                     <br><input id="new_color_hex" class="color_inputs" name="new_color_hex" placeholder="Color Hex Value"><br><br>
@@ -114,7 +114,30 @@
 
                 }
 
-                updateColors();
+                // Add Colors
+                let submitColor = document.getElementById("submit_color");
+                let colorName = document.getElementById("new_color_name");
+                let colorHex = document.getElementById("new_color_hex");
+                submitColor.onClick = () => {
+                    fetch('https://cs.colostate.edu:4444/~levib02/cs312/fuelviews/index.php/mtnl/colors', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+
+                        body: JSON.stringify({ type: 'add', name: colorName.value, hex: colorHex.value })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data);
+                            
+                        })
+                        .catch(error => console.error(error));
+                    
+                }
+                    
+
+
 
 
                 const body = document.getElementsByClassName("cc");
@@ -183,7 +206,7 @@
                             dropdown.addEventListener("change", function() {
                                 colorCell.style.backgroundColor = this.value;
                                 selectedTemp = this.value;
-                                colorCell.setAttribute('id', "add_" + this.value);
+                                colorCell.setAttribute('id', "add_#" + this.value);
                                 colorCell.style.color = "black";
                                 if (parseInt(this.value.substring(1, 3), 16) < 128) {
                                     colorCell.style.color = "white";
@@ -208,7 +231,7 @@
                 // document.getElementById('header_tables').style.marginBotton = "30px";
             });
             
-                document.addEventListener("DOMContentLoaded", async () => {
+                document.addEventListener("DOMContentLoaded", () => {
                 
                     let previousColor = "infinite";
                     const dropdowns = document.querySelectorAll('select');
@@ -329,7 +352,7 @@
 
                         //Loop through each color td element in the first table
                         for (const element of addTextElements) {
-                            if (element.getAttribute('id') === "add_" + selectedColor) {
+                            if (element.getAttribute('id') === "add_#" + selectedColor) {
                                 if (!element.textContent.includes(event.target.id.toString())) {
                                     if (event.target.getAttribute("bgcolor") === null) {
                                         //Update the text alphabetically
@@ -354,7 +377,7 @@
 
                                         //Remove the cell coordinate from the one it was previously in
                                         for (const rm of addTextElements) {
-                                            if (rm.textContent.includes(event.target.id.toString()) && rm.id !== "add_" + selectedColor) {
+                                            if (rm.textContent.includes(event.target.id.toString()) && rm.id !== "add_#" + selectedColor) {
                                                 rm.textContent = rm.textContent.slice(0, rm.textContent.indexOf(event.target.id)) + rm.textContent.slice(rm.textContent.indexOf(event.target.id) + 3);
                                                 break;
                                             }
@@ -489,7 +512,6 @@
                     link.href = "local_html/m1/assets/css/CC.css";
                 
             }
-
             </script>
             <button class="button_one" id="print_button" name="print_button" onclick="generate_view();">
                 Print

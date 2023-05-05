@@ -107,8 +107,14 @@ class Controller_MTNL extends Controller_Template
 		if (Input::method() == 'POST') {
         // Retrieve data from the request body
 			$name = Input::post('name');
-			$email = Input::post('hex');
+			$hex = Input::post('hex');
 			$type = Input::post('type');
+
+			if($type ==  'add') {
+				$sql = "INSERT INTO colors (nam, hex) VALUES (" . $name . ", " . $hex . ");" ;
+				$result = $db->query($sql);
+
+			}
 
 		}
 		 else if (Input::method() == 'GET'){
