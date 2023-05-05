@@ -1,46 +1,10 @@
-<?php
-// // Create a connection to the MySQL database
-// $conn = new mysqli("localhost", "", "", "");
-
-// $sql = "COUNT * FROM colors";
-
-// // Execute the SQL query to create the table
-// if ($conn->query($sql) === TRUE) {} else {
-//     echo "Error creating table: " . $conn->error;
-// }
-
-// // Check if the form was submitted
-// if (isset($_POST["submit"])) {
-//     // Retrieve the form data
-//     $name = $_POST["new_color_name"];
-//     $hex_value = $_POST["new_color_hex"];
-
-//     // Prepare the SQL query
-//     $stmt = $conn->prepare("INSERT INTO colors (name, hex_value) VALUES (?, ?)");
-//     $stmt->bind_param("ss", $name, $hex_value);
-
-//     // Execute the SQL query
-//     $stmt->execute();
-
-//     // Close the statement
-//     $stmt->close();
-
-//     // Redirect to the same page to prevent form resubmission
-//     header("Location: " . $_SERVER["PHP_SELF"]);
-//     exit();
-// }
-
-// Close the database connection
-// $conn->close();
-?>
-
 <main id = "all">
     <section class="cc" id = "interactable">
         <h1>Color Coordinate Generation</h1>
         <div id="header_tables" style="padding: 4px; margin-bottom: 4px;">
             <table id="firstTbl" class="print_view"></table>
             <div id="add_color">
-                <form method="POST">
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                     <p> Add new color </p>
                     <input id="new_color_name" class="color_inputs" name="new_color_name" placeholder="Color Name"><br>
                     <br><input id="new_color_hex" class="color_inputs" name="new_color_hex" placeholder="Color Hex Value"><br><br>
@@ -50,94 +14,92 @@
         </div>
         <table id="secondTbl" class="print_view"></table>
             <script type="text/javascript">
-                let colorList = [];
-                //             {
-                //                 hex: '#FF5733',
-                //                 name: 'Red'
-                //             },
-                //             {
-                //                 hex: '#FF8E00',
-                //                 name: 'Orange'
-                //             },
-                //             {
-                //                 hex: '#FFFF00',
-                //                 name: 'Yellow'
-                //             },
-                //             {
-                //                 hex: '#32CD32',
-                //                 name: 'Green'
-                //             },
-                //             {
-                //                 hex: '#008080',
-                //                 name: 'Teal'
-                //             },
-                //             {
-                //                 hex: '#4169E1',
-                //                 name: 'Blue'
-                //             },
-                //             {
-                //                 hex: '#800080',
-                //                 name: 'Purple'
-                //             },
-                //             {
-                //                 hex: '#964B00',
-                //                 name: 'Brown'
-                //             },
-                //             {
-                //                 hex: '#1f1f1f',
-                //                 name: 'Black'
-                //             },
-                //             {
-                //                 hex: '#808080',
-                //                 name: 'Grey'
-                //             }
-                //             ];
+                var colorList = [
+                            {
+                                hex: '#FF5733',
+                                name: 'Red'
+                            },
+                            {
+                                hex: '#FF8E00',
+                                name: 'Orange'
+                            },
+                            {
+                                hex: '#FFFF00',
+                                name: 'Yellow'
+                            },
+                            {
+                                hex: '#32CD32',
+                                name: 'Green'
+                            },
+                            {
+                                hex: '#008080',
+                                name: 'Teal'
+                            },
+                            {
+                                hex: '#4169E1',
+                                name: 'Blue'
+                            },
+                            {
+                                hex: '#800080',
+                                name: 'Purple'
+                            },
+                            {
+                                hex: '#964B00',
+                                name: 'Brown'
+                            },
+                            {
+                                hex: '#1f1f1f',
+                                name: 'Black'
+                            },
+                            {
+                                hex: '#808080',
+                                name: 'Grey'
+                            }
+                            ];
 
-                async function fetchColors() {
-                    try {
-                        const response = await fetch('https://cs.colostate.edu:4444/~levib02/cs312/fuelviews/index.php/mtnl/colors?');
-                        const data = await response.json();
-                        const newColors = [];
-                        data.forEach(color => {
-                        newColors.push(color);
-                        });
-                        return newColors;
-                    } catch (error) {
-                        console.error('Error:', error);
-                    }
-                }
+                // async function fetchColors() {
+                //     try {
+                //         const response = await fetch('https://cs.colostate.edu:4444/~levib02/cs312/fuelviews/index.php/mtnl/colors?');
+                //         const data = await response.json();
+                //         const newColors = [];
+                //         data.forEach(color => {
+                //         newColors.push(color);
+                //         });
+                //         return newColors;
+                //     } catch (error) {
+                //         console.error('Error:', error);
+                //     }
+                // }
 
-                async function updateColors() {
-                    colorList = await fetchColors();
+                // async function updateColors() {
+                //     colorList = await fetchColors();
 
-                    console.log(colorList);
+                //     console.log(colorList);
 
-                }
+                // }
 
-                // Add Colors
-                let submitColor = document.getElementById("submit_color");
-                let colorName = document.getElementById("new_color_name");
-                let colorHex = document.getElementById("new_color_hex");
-                submitColor.onClick = () => {
-                    fetch('https://cs.colostate.edu:4444/~levib02/cs312/fuelviews/index.php/mtnl/colors', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
+                // // Add Colors
+                // let submitColor = document.getElementById("submit_color");
+                // let colorName = document.getElementById("new_color_name");
+                // let colorHex = document.getElementById("new_color_hex");
+                // submitColor.onClick = () => {
+                //     fetch('https://cs.colostate.edu:4444/~levib02/cs312/fuelviews/index.php/mtnl/colors', {
+                //         method: 'POST',
+                //         headers: {
+                //             'Content-Type': 'application/json'
+                //         },
 
-                        body: JSON.stringify({ type: 'add', name: colorName.value, hex: colorHex.value })
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            console.log(data);
+                //         body: JSON.stringify({ type: 'add', name: colorName.value, hex: colorHex.value })
+                //         })
+                //         .then(response => response.json())
+                //         .then(data => {
+                //             console.log(data);
                             
-                        })
-                        .catch(error => console.error(error));
+                //         })
+                //         .catch(error => console.error(error));
                     
-                }
+                // }
                     
-
-
 
 
                 const body = document.getElementsByClassName("cc");
@@ -171,9 +133,9 @@
 
 
 
-                document.addEventListener("DOMContentLoaded", async () => {
+                document.addEventListener("DOMContentLoaded", () => {
 
-                colorList = await fetchColors();
+                
                 for(let i = 0; i < color; i++) {
                     var newRow = tbl.insertRow();
                     newRow.setAttribute('class', 'main-table-row')
@@ -206,7 +168,7 @@
                             dropdown.addEventListener("change", function() {
                                 colorCell.style.backgroundColor = this.value;
                                 selectedTemp = this.value;
-                                colorCell.setAttribute('id', "add_#" + this.value);
+                                colorCell.setAttribute('id', "add_" + this.value);
                                 colorCell.style.color = "black";
                                 if (parseInt(this.value.substring(1, 3), 16) < 128) {
                                     colorCell.style.color = "white";
@@ -232,7 +194,6 @@
             });
             
                 document.addEventListener("DOMContentLoaded", () => {
-                
                     let previousColor = "infinite";
                     const dropdowns = document.querySelectorAll('select');
                     let selected_colors = [];
@@ -352,7 +313,7 @@
 
                         //Loop through each color td element in the first table
                         for (const element of addTextElements) {
-                            if (element.getAttribute('id') === "add_#" + selectedColor) {
+                            if (element.getAttribute('id') === "add_" + selectedColor) {
                                 if (!element.textContent.includes(event.target.id.toString())) {
                                     if (event.target.getAttribute("bgcolor") === null) {
                                         //Update the text alphabetically
@@ -377,7 +338,7 @@
 
                                         //Remove the cell coordinate from the one it was previously in
                                         for (const rm of addTextElements) {
-                                            if (rm.textContent.includes(event.target.id.toString()) && rm.id !== "add_#" + selectedColor) {
+                                            if (rm.textContent.includes(event.target.id.toString()) && rm.id !== "add_" + selectedColor) {
                                                 rm.textContent = rm.textContent.slice(0, rm.textContent.indexOf(event.target.id)) + rm.textContent.slice(rm.textContent.indexOf(event.target.id) + 3);
                                                 break;
                                             }
@@ -512,6 +473,7 @@
                     link.href = "local_html/m1/assets/css/CC.css";
                 
             }
+
             </script>
             <button class="button_one" id="print_button" name="print_button" onclick="generate_view();">
                 Print

@@ -51,41 +51,11 @@ class Controller_MTNL extends Controller_Template
 		$rows_cols = isset($_GET["rows/cols"]) ? $_GET["rows/cols"] : null;
 		$color = isset($_GET["color"]) ? $_GET["color"] : null;
 
-		if(!isset($rows_cols) & !isset($color)) {
-			$this->template->content = "Parameter \"rows/cols\" and \"color\"  not set\n EX: cc?color=9&rows/cols=10";
-		}
-		else if(!isset($rows_cols) & isset($color)) {
-			$this->template->content = "Parameter \"rows/cols\" not set\r\n EX: cc?color=9&rows/cols=10";
-		}
-		else if(!isset($color) & isset($rows_cols)) {
-			$this->template->content = "Parameter \"color\" not set\r\n EX: cc?color=9&rows/cols=10";
+		if(!isset($rows_cols) | !isset($color)) {
+			$this->template->content = View::forge('MTNL/CCForm.php');
 		}
 		else{
-			// both set
-			$valid_rows_cols = true;
-			$valid_color = true;
-
-			if($color <= 0 | $color > 10) {
-				$valid_color = false;
-			}
-			if($rows_cols <= 0 | $rows_cols > 26 ) {
-				$valid_rows_cols = false;
-			}
-
-			if(!$valid_color) {
-				$this->template->content = "Invalid input for \"color\" \r\n Should be a value between 1-10 \r\n EX: cc?color=9&rows/cols=10";
-			}
-			else if(!$valid_rows_cols){
-				$this->template->content = "Invalid input for \"rows/cols\"\r\n Should be a value between 1-26 \r\n EX: cc?color=9&rows/cols=10";
-			}
-			else if(!$valid_color & !$valid_rows_cols) {
-				$this->template->content = "Invalid input for \"color\" and Invalid input for \"rows/cols\"\r\n \"color\" should be a value between 1-10 \r\n\"color\" should be a value between 1-26 \r\n EX: cc?color=9&rows/cols=10";
-
-			}
-			else if($valid_color & $valid_rows_cols) {
-				$this->template->content = view::forge('MTNL/two', $data);
-			}
-
+			$this->template->content = view::forge('MTNL/two', $data);
 		}
 
 		$this->template->title = 'Color Coordinate Sheet';
