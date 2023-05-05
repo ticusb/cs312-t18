@@ -1,7 +1,16 @@
 <?php
 
+class MyDB extends SQLite3 {
+      function __construct() {
+         $this->open('mtnl.db');
+      }
+}
+
 class Controller_MTNL extends Controller_Template
 {
+
+	
+
 	public function before()
 	{
 		parent::before();
@@ -78,7 +87,26 @@ class Controller_MTNL extends Controller_Template
 			}
 
 		}
+
+		$db = new MyDB();
+		if(!$db) {
+			echo $db->lastErrorMsg();
+		} else {
+			echo "Opened database successfully\n";
+		}
+
+		$sql = "SELECT count(*) from colors";
 		
+
+		$ret = $db->query($sql);
+
+		echo $ret;
+		echo "Operation done successfully\n";
+		$db->close();
+
+		
+
+
 		$this->template->title = 'Color Coordinate Sheet';
 		$this->template->currLink = "two.php";
 		$this->template->css = "mtnl.css";
