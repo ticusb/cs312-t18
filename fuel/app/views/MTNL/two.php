@@ -142,7 +142,7 @@
                     let radioButtonCell = newRow.insertCell();
                     radioButtonCell.style.minWidth = "100px";
                     radioButtonCell.style.maxWidth = "100px";
-                    
+
                     let colorPickerCell = newRow.insertCell();
                     let colorCell = newRow.insertCell();
                     colorCell.setAttribute('class', 'add-text');
@@ -166,6 +166,17 @@
 
                     for(let j = 0; j < 2; j++){
                         if(j == 0){
+
+                            let delete_button = document.createElement("button");
+                            console.log("creating a delete button");
+                            delete_button.innerHTML = "Delete";
+                            radioButtonCell.appendChild(delete_button);
+                            delete_button.type = "radio";
+                            delete_button.name = "delete";
+                            delete_button.id = "delete_button_" + i + color;
+                            delete_button.setAttribute('class', 'button_list');
+                            delete_button.style.marginLeft = "4px";
+
                             let dropdown = document.createElement("select");
                             let defaultOption = document.createElement("option");
                             defaultOption.text = "Select a color";
@@ -218,6 +229,17 @@
                 }); 
             
                 document.addEventListener("DOMContentLoaded", () => {
+
+                    document.addEventListener("DOMContentLoaded", () => {
+                        const delete_buttons = document.querySelectorAll('[id^="delete_button_"]');
+                        delete_buttons.forEach ((element) => {
+                            element.addEventListener("click", (event) => {
+                                const addTextElements = document.getElementsByClassName('add-text');
+                                addTextElements[parseInt(element.id.slice(14)) - color].style.backgroundColor = "";
+                            });
+                        });
+                    }); 
+                    
                     let previousColor = "infinite";
                     const dropdowns = document.querySelectorAll('select');
                     let selected_colors = [];
@@ -498,16 +520,73 @@
 
                     
             }
-
             
+            let isPrintView = false;
+            let secondTable = document.querySelector('#secondTbl');
+            let savedTable;
+
+            let savedColorTextCells = []
+
 
             function generate_view1() {
+                let addTextCells = document.querySelectorAll('.add-text');
+                
+                if(!isPrintView) {
+                    savedTable = secondTable.innerHTML;
+                    const lower_cells = document.querySelectorAll('.color_table');
+                    lower_cells.forEach ((cell) => {
+                        cell.setAttribute('bgcolor', '');
+                    });
+
+                    addTextCells.forEach((cell, index) => {
+                        savedColorTextCells.push(cell.style.backgroundColor);
+                        cell.style.backgroundColor = '';
+                    });
+                }
+                else {
+                    addTextCells.forEach((cell, index) => {
+                        cell.style.backgroundColor = savedColorTextCells[index];
+                    });
+                    secondTable.innerHTML = savedTable;
+                }
+                
+                isPrintView = !isPrintView;
+                
+
                 document.getElementById("body").classList.toggle("printView");
-                document.getElementById("header_tables").classList.toggle("hidden");
+                //document.getElementById("add_color").classList.toggle("hidden");
+                // document.querySelectorAll('.radio-cell').forEach((element, index) => {
+                //         element.classList.toggle("hidden");
+                // });
                 document.querySelector('#print_button').innerHTML = document.querySelector('#print_button').innerHTML == 'Exit Print View' ? "Print View" : "Exit Print View";
                 document.querySelector('#secondTbl').classList.toggle("disabled");
+                document.querySelector('#firstTbl').classList.toggle("disabled");
+                document.querySelector('#add_color').classList.toggle("disabled");
 
-            }
+
+                
+
+                let radio_cells = document.querySelectorAll('.radio-cell');
+                radio_cells.forEach((element, index) => {
+                    element.classList.toggle("hidden");
+                });
+
+                // let colorInfoList = document.querySelectorAll('.radio-cell');
+                // colorInfoList.forEach((element, index) => {
+                //     const originalValue = document.querySelectorAll('.add-text')[index].textContent;
+                //     element.textContent = originalValue;
+                //     element.style.backgroundColor = "";
+                //     element.style.color = "";
+                //     element.style.minWidth = "350px";
+                //     element.style.maxWidth = "350px";
+                //     element.closest('tr').querySelector('td:first-child').style.minWidth = "100px";
+                //     element.closest('tr').querySelector('td:first-child').style.maxWidth = "100px";
+                // });
+
+                
+
+            } 
+
             // document.getElementById("print_button").addEventListener("click", function() {
             //     let content = document.getElementById("body");
             //     content.classList.toggle("printView");
