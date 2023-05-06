@@ -142,6 +142,7 @@
                     let radioButtonCell = newRow.insertCell();
                     radioButtonCell.style.minWidth = "100px";
                     radioButtonCell.style.maxWidth = "100px";
+
                     let colorPickerCell = newRow.insertCell();
                     let colorCell = newRow.insertCell();
                     colorCell.setAttribute('class', 'add-text');
@@ -152,6 +153,17 @@
                     button.name = "color";
                     button.id = "button_" + i;
                     button.setAttribute('class', 'button_list');
+
+                    let delete_button = document.createElement("button");
+                    console.log("creating a delete button");
+                    delete_button.innerHTML = "Delete";
+                    radioButtonCell.appendChild(delete_button);
+                    delete_button.type = "radio";
+                    delete_button.name = "delete";
+                    delete_button.id = "delete_button_" + i + color;
+                    delete_button.setAttribute('class', 'button_list');
+                    delete_button.style.marginLeft = "4px";
+
                     for(let j = 0; j < 2; j++){
                         if(j == 0){
 
@@ -205,6 +217,16 @@
                 // tbl.style.marginBottom = "4px";
                 // document.getElementById('header_tables').style.marginBotton = "30px";
             });
+
+                document.addEventListener("DOMContentLoaded", () => {
+                    const delete_buttons = document.querySelectorAll('[id^="delete_button_"]');
+                    delete_buttons.forEach ((element) => {
+                        element.addEventListener("click", (event) => {
+                            const addTextElements = document.getElementsByClassName('add-text');
+                            addTextElements[parseInt(element.id.slice(14)) - color].style.backgroundColor = "";
+                        });
+                    });
+                }); 
             
                 document.addEventListener("DOMContentLoaded", () => {
 
@@ -569,6 +591,7 @@
             //     let content = document.getElementById("body");
             //     content.classList.toggle("printView");
             // });
+
 
             </script>
             <button class="button_one" id="print_button" name="print_button" onclick="generate_view1()">
