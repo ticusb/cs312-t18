@@ -5,7 +5,7 @@
             <table id="firstTbl" class="print_view"></table>
             <div id="add_color">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-                    <p> Add new color </p>
+                    <p> Add/Edit color </p>
                     <input id="new_color_name" class="color_inputs" name="new_color_name" placeholder="Color Name"><br>
                     <br><input id="new_color_hex" class="color_inputs" name="new_color_hex" placeholder="Color Hex Value"><br><br>
                     <button id="submit_color" name="submit">Submit</button>
@@ -140,11 +140,13 @@
                     var newRow = tbl.insertRow();
                     newRow.setAttribute('class', 'main-table-row')
                     let radioButtonCell = newRow.insertCell();
+                    radioButtonCell.style.minWidth = "100px";
+                    radioButtonCell.style.maxWidth = "100px";
                     let colorPickerCell = newRow.insertCell();
                     let colorCell = newRow.insertCell();
                     colorCell.setAttribute('class', 'add-text');
                     let button = document.createElement("button");
-                    button.innerHTML = "Set Current";
+                    button.innerHTML = "Set";
                     radioButtonCell.appendChild(button);
                     button.type = "radio";
                     button.name = "color";
@@ -152,6 +154,17 @@
                     button.setAttribute('class', 'button_list');
                     for(let j = 0; j < 2; j++){
                         if(j == 0){
+
+                            let delete_button = document.createElement("button");
+                            console.log("creating a delete button");
+                            delete_button.innerHTML = "Delete";
+                            radioButtonCell.appendChild(delete_button);
+                            delete_button.type = "radio";
+                            delete_button.name = "delete";
+                            delete_button.id = "delete_button_" + i + color;
+                            delete_button.setAttribute('class', 'button_list');
+                            delete_button.style.marginLeft = "4px";
+
                             let dropdown = document.createElement("select");
                             let defaultOption = document.createElement("option");
                             defaultOption.text = "Select a color";
@@ -194,6 +207,17 @@
             });
             
                 document.addEventListener("DOMContentLoaded", () => {
+
+                    document.addEventListener("DOMContentLoaded", () => {
+                        const delete_buttons = document.querySelectorAll('[id^="delete_button_"]');
+                        delete_buttons.forEach ((element) => {
+                            element.addEventListener("click", (event) => {
+                                const addTextElements = document.getElementsByClassName('add-text');
+                                addTextElements[parseInt(element.id.slice(14)) - color].style.backgroundColor = "";
+                            });
+                        });
+                    }); 
+                    
                     let previousColor = "infinite";
                     const dropdowns = document.querySelectorAll('select');
                     let selected_colors = [];
@@ -514,6 +538,8 @@
                 // });
                 document.querySelector('#print_button').innerHTML = document.querySelector('#print_button').innerHTML == 'Exit Print View' ? "Print View" : "Exit Print View";
                 document.querySelector('#secondTbl').classList.toggle("disabled");
+                document.querySelector('#firstTbl').classList.toggle("disabled");
+                document.querySelector('#add_color').classList.toggle("disabled");
 
 
                 
