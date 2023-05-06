@@ -471,12 +471,27 @@
                     var link = newWindow.document.createElement("link");
                     link.rel = "stylesheet";
                     link.href = "local_html/m1/assets/css/CC.css";
-                
+
+                    
             }
 
+            
+
+            function generate_view1() {
+                document.getElementById("body").classList.toggle("printView");
+                document.getElementById("header_tables").classList.toggle("hidden");
+                document.querySelector('#print_button').innerHTML = document.querySelector('#print_button').innerHTML == 'Exit Print View' ? "Print View" : "Exit Print View";
+                document.querySelector('#secondTbl').classList.toggle("disabled");
+
+            }
+            // document.getElementById("print_button").addEventListener("click", function() {
+            //     let content = document.getElementById("body");
+            //     content.classList.toggle("printView");
+            // });
+
             </script>
-            <button class="button_one" id="print_button" name="print_button" onclick="generate_view();">
-                Print
+            <button class="button_one" id="print_button" name="print_button" onclick="generate_view1()">
+                Print View
             </button>
     </section>
 </main>
