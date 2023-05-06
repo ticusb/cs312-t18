@@ -55,8 +55,7 @@ table {
     margin: auto;
 }
 #firstTbl {
-    width: 400px;
-    display: inline-block;
+    width: 500px;
 }
 
 #firstTbl tr {
@@ -83,4 +82,16 @@ td {
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.printView {
+    filter: grayscale(100%);
+}
+
+.disabled {
+    pointer-events: none;
+}
+
+.hidden {
+    display: none;
 }
