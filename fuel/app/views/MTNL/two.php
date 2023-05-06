@@ -1,43 +1,3 @@
-<?php
-// Create a connection to the MySQL database
-// $conn = new mysqli("localhost", "", "", "");
-
-// $sql = "CREATE TABLE colors (
-//     id INT AUTO_INCREMENT PRIMARY KEY,
-//     name VARCHAR(255) UNIQUE,
-//     hex_value VARCHAR(7) UNIQUE
-// )";
-
-// // Execute the SQL query to create the table
-// if ($conn->query($sql) === TRUE) {} else {
-//     echo "Error creating table: " . $conn->error;
-// }
-
-// // Check if the form was submitted
-// if (isset($_POST["submit"])) {
-//     // Retrieve the form data
-//     $name = $_POST["new_color_name"];
-//     $hex_value = $_POST["new_color_hex"];
-
-//     // Prepare the SQL query
-//     $stmt = $conn->prepare("INSERT INTO colors (name, hex_value) VALUES (?, ?)");
-//     $stmt->bind_param("ss", $name, $hex_value);
-
-//     // Execute the SQL query
-//     $stmt->execute();
-
-//     // Close the statement
-//     $stmt->close();
-
-//     // Redirect to the same page to prevent form resubmission
-//     header("Location: " . $_SERVER["PHP_SELF"]);
-//     exit();
-// }
-
-// // Close the database connection
-// $conn->close();
-?>
-
 <main id = "all">
     <section class="cc" id = "interactable">
         <h1>Color Coordinate Generation</h1>
@@ -96,6 +56,51 @@
                                 name: 'Grey'
                             }
                             ];
+
+                // async function fetchColors() {
+                //     try {
+                //         const response = await fetch('https://cs.colostate.edu:4444/~levib02/cs312/fuelviews/index.php/mtnl/colors?');
+                //         const data = await response.json();
+                //         const newColors = [];
+                //         data.forEach(color => {
+                //         newColors.push(color);
+                //         });
+                //         return newColors;
+                //     } catch (error) {
+                //         console.error('Error:', error);
+                //     }
+                // }
+
+                // async function updateColors() {
+                //     colorList = await fetchColors();
+
+                //     console.log(colorList);
+
+                // }
+
+                // // Add Colors
+                // let submitColor = document.getElementById("submit_color");
+                // let colorName = document.getElementById("new_color_name");
+                // let colorHex = document.getElementById("new_color_hex");
+                // submitColor.onClick = () => {
+                //     fetch('https://cs.colostate.edu:4444/~levib02/cs312/fuelviews/index.php/mtnl/colors', {
+                //         method: 'POST',
+                //         headers: {
+                //             'Content-Type': 'application/json'
+                //         },
+
+                //         body: JSON.stringify({ type: 'add', name: colorName.value, hex: colorHex.value })
+                //         })
+                //         .then(response => response.json())
+                //         .then(data => {
+                //             console.log(data);
+                            
+                //         })
+                //         .catch(error => console.error(error));
+                    
+                // }
+                    
+
 
                 const body = document.getElementsByClassName("cc");
 
@@ -466,12 +471,27 @@
                     var link = newWindow.document.createElement("link");
                     link.rel = "stylesheet";
                     link.href = "local_html/m1/assets/css/CC.css";
-                
+
+                    
             }
 
+            
+
+            function generate_view1() {
+                document.getElementById("body").classList.toggle("printView");
+                document.getElementById("header_tables").classList.toggle("hidden");
+                document.querySelector('#print_button').innerHTML = document.querySelector('#print_button').innerHTML == 'Exit Print View' ? "Print View" : "Exit Print View";
+                document.querySelector('#secondTbl').classList.toggle("disabled");
+
+            }
+            // document.getElementById("print_button").addEventListener("click", function() {
+            //     let content = document.getElementById("body");
+            //     content.classList.toggle("printView");
+            // });
+
             </script>
-            <button class="button_one" id="print_button" name="print_button" onclick="generate_view();">
-                Print
+            <button class="button_one" id="print_button" name="print_button" onclick="generate_view1()">
+                Print View
             </button>
     </section>
 </main>
