@@ -474,16 +474,71 @@
 
                     
             }
-
             
+            let isPrintView = false;
+            let secondTable = document.querySelector('#secondTbl');
+            let savedTable;
+
+            let savedColorTextCells = []
+
 
             function generate_view1() {
+                let addTextCells = document.querySelectorAll('.add-text');
+                
+                if(!isPrintView) {
+                    savedTable = secondTable.innerHTML;
+                    const lower_cells = document.querySelectorAll('.color_table');
+                    lower_cells.forEach ((cell) => {
+                        cell.setAttribute('bgcolor', '');
+                    });
+
+                    addTextCells.forEach((cell, index) => {
+                        savedColorTextCells.push(cell.style.backgroundColor);
+                        cell.style.backgroundColor = '';
+                    });
+                }
+                else {
+                    addTextCells.forEach((cell, index) => {
+                        cell.style.backgroundColor = savedColorTextCells[index];
+                    });
+                    secondTable.innerHTML = savedTable;
+                }
+                
+                isPrintView = !isPrintView;
+                
+
                 document.getElementById("body").classList.toggle("printView");
-                document.getElementById("header_tables").classList.toggle("hidden");
+                //document.getElementById("add_color").classList.toggle("hidden");
+                // document.querySelectorAll('.radio-cell').forEach((element, index) => {
+                //         element.classList.toggle("hidden");
+                // });
                 document.querySelector('#print_button').innerHTML = document.querySelector('#print_button').innerHTML == 'Exit Print View' ? "Print View" : "Exit Print View";
                 document.querySelector('#secondTbl').classList.toggle("disabled");
 
-            }
+
+                
+
+                let radio_cells = document.querySelectorAll('.radio-cell');
+                radio_cells.forEach((element, index) => {
+                    element.classList.toggle("hidden");
+                });
+
+                // let colorInfoList = document.querySelectorAll('.radio-cell');
+                // colorInfoList.forEach((element, index) => {
+                //     const originalValue = document.querySelectorAll('.add-text')[index].textContent;
+                //     element.textContent = originalValue;
+                //     element.style.backgroundColor = "";
+                //     element.style.color = "";
+                //     element.style.minWidth = "350px";
+                //     element.style.maxWidth = "350px";
+                //     element.closest('tr').querySelector('td:first-child').style.minWidth = "100px";
+                //     element.closest('tr').querySelector('td:first-child').style.maxWidth = "100px";
+                // });
+
+                
+
+            } 
+
             // document.getElementById("print_button").addEventListener("click", function() {
             //     let content = document.getElementById("body");
             //     content.classList.toggle("printView");
