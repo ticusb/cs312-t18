@@ -103,6 +103,7 @@
 
 
                 const body = document.getElementsByClassName("cc");
+                let selected_colors = [];
 
                 const queryString = window.location.search;
                 const urlParams = new URLSearchParams(queryString);
@@ -154,26 +155,15 @@
                     button.id = "button_" + i;
                     button.setAttribute('class', 'button_list');
 
-                    let delete_button = document.createElement("button");
-                    console.log("creating a delete button");
-                    delete_button.innerHTML = "Delete";
-                    radioButtonCell.appendChild(delete_button);
-                    delete_button.type = "radio";
-                    delete_button.name = "delete";
-                    delete_button.id = "delete_button_" + i + color;
-                    delete_button.setAttribute('class', 'button_list');
-                    delete_button.style.marginLeft = "4px";
-
                     for(let j = 0; j < 2; j++){
                         if(j == 0){
 
                             let delete_button = document.createElement("button");
-                            console.log("creating a delete button");
                             delete_button.innerHTML = "Delete";
                             radioButtonCell.appendChild(delete_button);
                             delete_button.type = "radio";
                             delete_button.name = "delete";
-                            delete_button.id = "delete_button_" + i + color;
+                            delete_button.id = "delete_button_" + (i + parseInt(color)).toString();
                             delete_button.setAttribute('class', 'button_list');
                             delete_button.style.marginLeft = "4px";
 
@@ -218,37 +208,73 @@
                 // document.getElementById('header_tables').style.marginBotton = "30px";
             });
 
+            function rgbToHex(rgb) {
+                const [r, g, b] = rgb.substring(4, rgb.length-1).split(", ");
+
+                const hexR = parseInt(r).toString(16).padStart(2, "0");
+                const hexG = parseInt(g).toString(16).padStart(2, "0");
+                const hexB = parseInt(b).toString(16).padStart(2, "0");
+
+                const hexColor = "#" + hexR + hexG + hexB;
+
+                return hexColor.toUpperCase();
+            }
+
+            function triggerEvent(el, type) {
+                // IE9+ and other modern browsers
+                if ('createEvent' in document) {
+                    var e = document.createEvent('HTMLEvents');
+                    e.initEvent(type, false, true);
+                    el.dispatchEvent(e);
+                } else {
+                    // IE8
+                    var e = document.createEventObject();
+                    e.eventType = type;
+                    el.fireEvent('on' + e.eventType, e);
+                }
+            }
                 document.addEventListener("DOMContentLoaded", () => {
                     const delete_buttons = document.querySelectorAll('[id^="delete_button_"]');
                     delete_buttons.forEach ((element) => {
                         element.addEventListener("click", (event) => {
                             const addTextElements = document.getElementsByClassName('add-text');
+                            let tmp_color = addTextElements[parseInt(element.id.slice(14)) - color].style.backgroundColor;
+                            
                             addTextElements[parseInt(element.id.slice(14)) - color].style.backgroundColor = "";
+                            // check if current color of the target is the selected color
+                            if (rgbToHex(tmp_color) === selectedColor) {
+                                selectedColor = "";
+                            }
+                            const color_buttons = document.getElementsByClassName('color_table');
+                            Array.from(color_buttons).forEach ((element) => {
+                                if (element.getAttribute('bgcolor') === rgbToHex(tmp_color)) {
+                                    element.setAttribute('bgcolor', '');
+                                }
+                            });
+
+                            selected_colors.splice(selected_colors.indexOf(rgbToHex(tmp_color)), 1);
+
+                            
+                            const my_select = Array.from(document.getElementsByTagName('select'))[parseInt(element.id.slice(14)) - color];
+                            my_select.selectedIndex = 0;
+                            triggerEvent(my_select, 'change');
+
+                            Array.from(document.getElementsByClassName('add-text'))[parseInt(element.id.slice(14)) - color].textContent = "";
+                            Array.from(document.getElementsByClassName('add-text'))[parseInt(element.id.slice(14)) - color].id = "";
                         });
                     });
                 }); 
             
                 document.addEventListener("DOMContentLoaded", () => {
-
-                    document.addEventListener("DOMContentLoaded", () => {
-                        const delete_buttons = document.querySelectorAll('[id^="delete_button_"]');
-                        delete_buttons.forEach ((element) => {
-                            element.addEventListener("click", (event) => {
-                                const addTextElements = document.getElementsByClassName('add-text');
-                                addTextElements[parseInt(element.id.slice(14)) - color].style.backgroundColor = "";
-                            });
-                        });
-                    }); 
                     
                     let previousColor = "infinite";
                     const dropdowns = document.querySelectorAll('select');
-                    let selected_colors = [];
+                    
                     dropdowns.forEach((dropdown, index) => {
                         dropdown.addEventListener('mousedown', (event) => {
                             previousColor = event.target.value;
                         });
                         dropdown.addEventListener('change', (event) => {
-                            
 
                             // Reset each option to be enabled
                             for (let i = 0; i < dropdowns.length; i++) {
@@ -258,7 +284,6 @@
                             }
 
                             for (let op = 0; op < dropdown.options.length; op++) {
-                                //TODO: set option at event.target.value to have the class checked
                                 dropdown.options[op].classList.remove('checked');
                                 if (dropdown.options[op].value === event.target.value) {
                                     dropdown.options[op].classList.add('checked');
@@ -275,7 +300,7 @@
                             selected_colors = selected_colors.filter(item => item !== "Select a color");
 
                             //If this is the first color, we set the default selected color to it
-                            if (selectedColor === "") {
+                            if (selectedColor === "" && selected_colors.length > 0) {
                                 selectedColor = selected_colors[0];
                             } else {
                                 for (let i = 1; i < rows + 1; i++) {
