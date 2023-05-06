@@ -3,7 +3,7 @@
         <h1>Color Coordinate Generation</h1>
         <div id="header_tables" style="padding: 4px; margin-bottom: 4px;">
             <table id="firstTbl" class="print_view"></table>
-            <div id="add_color">
+            <div id="add_color" class="non-print">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                     <p> Add/Edit color </p>
                     <input id="new_color_name" class="color_inputs" name="new_color_name" placeholder="Color Name"><br>
@@ -13,6 +13,12 @@
             </div>
         </div>
         <table id="secondTbl" class="print_view"></table>
+        <style>
+            .hidden {
+                display: none;
+                visibility: hidden;
+            }
+            </style>
             <script type="text/javascript">
                 var colorList = [
                             {
@@ -150,6 +156,7 @@
                     let button = document.createElement("button");
                     button.innerHTML = "Set";
                     radioButtonCell.appendChild(button);
+                    radioButtonCell.classList.add('non-print');
                     button.type = "radio";
                     button.name = "color";
                     button.id = "button_" + i;
@@ -201,6 +208,7 @@
                 let tmp_row = tbl.insertRow();
                 let eraser = tmp_row.insertCell();
                 eraser.textContent = "Eraser";
+                eraser.classList.add('non-print');
                 eraser.textAlign = "center";
                 eraser.colSpan = "3";
                 eraser.setAttribute ('id', 'eraser');
@@ -556,7 +564,9 @@
             function generate_view1() {
                 let addTextCells = document.querySelectorAll('.add-text');
                 
+                
                 if(!isPrintView) {
+                    document.body.style.filter = "grayscale(100%)";
                     savedTable = secondTable.innerHTML;
                     const lower_cells = document.querySelectorAll('.color_table');
                     lower_cells.forEach ((cell) => {
@@ -567,12 +577,47 @@
                         savedColorTextCells.push(cell.style.backgroundColor);
                         cell.style.backgroundColor = '';
                     });
+
+                    Array.from(document.getElementsByClassName('non-print')).forEach ((element) => {
+                        element.classList.add('hidden');
+                    });
+
+                    const select_elements = document.querySelectorAll('select');
+                    select_elements.forEach((element) => {
+                        element.setAttribute('disabled', 'disabled');
+                        element.style.pointerEvents = 'none';
+                        let count = 0;
+                        Array.from(element.options).forEach((option) => {
+                        if (option.classList.contains('checked')) {
+                            const parent = element.parentNode;
+                            parent.textContent = option.textContent;
+                            element.classList.add('hidden');
+                            count++;
+                        }
+                        });
+                        if (count === 0) {
+                            element.parentNode.parentNode.classList.add('hidden');
+                        }
+                    });
+
+                    // document.getElementById('header_tables').style.removeProperty('margin');
+                    // document.getElementById('header_tables').style.removeProperty('padding');
+                    // document.getElementById('add_color').style.zIndex = "-1";
+                    
+                    // document.getElementById('header_tables').style.height = "auto";
+
+
                 }
                 else {
+                    document.body.style.filter = "";
                     addTextCells.forEach((cell, index) => {
                         cell.style.backgroundColor = savedColorTextCells[index];
                     });
                     secondTable.innerHTML = savedTable;
+
+                    Array.from(document.getElementsByClassName('non-print')).forEach ((element) => {
+                        element.classList.remove('hidden');
+                    });
                 }
                 
                 isPrintView = !isPrintView;
