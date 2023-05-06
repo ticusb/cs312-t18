@@ -1,4 +1,7 @@
-cp ./fuel/app/views/MTNL/index.php ~/fuel/app/views/MTNL/index.php
-cp ./fuel/app/views/MTNL/one.php ~/fuel/app/views/MTNL/one.php
-cp ./fuel/app/views/MTNL/two.php ~/fuel/app/views/MTNL/two.php
-cp ./fuel/app/views/mtnl_template.php ~/fuel/app/views/mtnl_template.php
+echo "Copying index, one, two, the controller and any other fuel/app files over..."
+cp -r ~/cs312-t18/fuel/app/classes ~/fuel/app
+cp -r ~/cs312-t18/fuel/app/views ~/fuel/app
+echo "Copying m1 folder over..."
+cp -r ~/cs312-t18/local_html/m1 ~/local_html
+echo "Copying assets folder over..."
+cp -r ~/cs312-t18/local_html/assets ~/local_html
